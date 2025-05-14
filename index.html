@@ -3,19 +3,632 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noahswitch IT & Academic Services</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>NoahSwitch IT & Academic Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1e88e5;
+            --secondary-color: #0d47a1;
+            --accent-color: #64b5f6;
+            --light-color: #e3f2fd;
+            --dark-color: #1a237e;
+            --text-color: #333;
+            --light-text: #f5f5f5;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+        }
+        
+        .brand h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);
+            color: white;
+            text-align: center;
+            padding: 180px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon fill="rgba(255,255,255,0.05)" points="0,100 100,0 100,100"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 10px;
+            border: 2px solid white;
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .hero-btn:hover {
+            background-color: transparent;
+            color: white;
+        }
+        
+        .hero-btn.outline {
+            background-color: transparent;
+            color: white;
+        }
+        
+        .hero-btn.outline:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: white;
+        }
+        
+        .about h2 {
+            color: var(--dark-color);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            font-size: 2.5rem;
+        }
+        
+        .about h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+        
+        .about p {
+            font-size: 1.1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+        
+        .services h2 {
+            color: var(--dark-color);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            font-size: 2.5rem;
+        }
+        
+        .services h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .service-card {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            border-radius: 50%;
+            margin-bottom: 25px;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .service-card h3 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .service-card ul {
+            list-style: none;
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .service-card ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .service-card ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        
+        /* Why Choose Us Section */
+        .why-choose {
+            padding: 100px 0;
+            background-color: white;
+        }
+        
+        .why-choose h2 {
+            color: var(--dark-color);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            font-size: 2.5rem;
+        }
+        
+        .why-choose h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            border-radius: 50%;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .feature h3 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+        
+        .contact h2 {
+            color: var(--dark-color);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            font-size: 2.5rem;
+        }
+        
+        .contact h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+        
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .contact-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .submit-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+        }
+        
+        .contact-info {
+            padding: 40px;
+        }
+        
+        .contact-info h3 {
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            border-radius: 50%;
+            margin-right: 20px;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .contact-text h4 {
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        .contact-text p a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .contact-text p a:hover {
+            color: var(--dark-color);
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 30px;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--light-color);
+            border-radius: 50%;
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-text);
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-brand h3 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-brand p {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul li a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid,
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <img src="Logo.png" alt="Noahswitch Logo" class="logo">
+            <div class="brand">
+                <h1>NoahSwitch</h1>
+            </div>
             <nav>
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#services"><i class="fas fa-cogs"></i> Services</a></li>
+                    <li><a href="#about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -23,106 +636,259 @@
 
     <section id="home" class="hero">
         <div class="container">
-            <h1>Unlock Your Digital Potential with Noahswitch: IT Solutions & Academic Excellence</h1>
+            <h1>Unlock Your Digital Potential with NoahSwitch</h1>
+            <p>Innovative IT Solutions & Academic Excellence to Transform Your Vision into Reality</p>
+            <div class="hero-buttons">
+                <a href="#services" class="hero-btn">Explore Services</a>
+                <a href="#contact" class="hero-btn outline">Get Started</a>
+            </div>
         </div>
     </section>
 
     <section id="about" class="about">
         <div class="container">
-            <h2>About Noahswitch</h2>
-            <p>Noahswitch is a leader in innovative technology training and services, empowering individuals and businesses with tailored solutions in web development, brand strategy, and global marketing. We drive innovation and unlock your potential through comprehensive tech services and academic support. Trusted by clients globally for our expertise and transformative results.</p>
+            <h2>About NoahSwitch</h2>
+            <p>NoahSwitch is a leader in innovative technology training and services, empowering individuals and businesses with tailored solutions in web development, brand strategy, and global marketing. We drive innovation and unlock your potential through comprehensive tech services and academic support. Trusted by clients globally for our expertise and transformative results.</p>
         </div>
     </section>
 
     <section id="services" class="services">
         <div class="container">
             <h2>Our Services</h2>
-            <div class="service-category">
-                <h3>IT & Tech Services</h3>
-                <ul>
-                    <li>App & Web Development</li>
-                    <li>Technical Consultation</li>
-                    <li>Infrastructure Setup</li>
-                    <li>Innovation & Digital Transformation</li>
-                    <li>Marketing & Pixel Integration</li>
-                </ul>
-            </div>
-            <div class="service-category">
-                <h3>Academic Support</h3>
-                <ul>
-                    <li>Thesis/PFE Writing (with coding)</li>
-                    <li>Research and Documentation Assistance</li>
-                </ul>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>IT & Tech Services</h3>
+                    <ul>
+                        <li>App & Web Development</li>
+                        <li>Technical Consultation</li>
+                        <li>Infrastructure Setup</li>
+                        <li>Innovation & Digital Transformation</li>
+                        <li>Marketing & Pixel Integration</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Academic Support</h3>
+                    <ul>
+                        <li>Thesis/PFE Writing (with coding)</li>
+                        <li>Research and Documentation Assistance</li>
+                        <li>Technical Project Implementation</li>
+                        <li>Academic Programming Support</li>
+                        <li>Data Analysis & Visualization</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Digital Marketing</h3>
+                    <ul>
+                        <li>Brand Strategy Development</li>
+                        <li>Social Media Management</li>
+                        <li>SEO Optimization</li>
+                        <li>Content Creation</li>
+                        <li>Analytics & Performance Tracking</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="why-choose" class="why-choose">
         <div class="container">
-            <h2>Why Choose Noahswitch?</h2>
-            <ul>
-                <li>Tailored solutions for every client</li>
-                <li>International expertise</li>
-                <li>Proven client satisfaction</li>
-                <li>Empowering your digital journey and academic success</li>
-            </ul>
+            <h2>Why Choose NoahSwitch?</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h3>Tailored Solutions</h3>
+                    <p>Customized approach for every client and project to meet your specific needs.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>International Expertise</h3>
+                    <p>Global perspective with local understanding to drive your success worldwide.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Client Satisfaction</h3>
+                    <p>Proven track record of delivering exceptional results that exceed expectations.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Empowering Growth</h3>
+                    <p>Supporting your digital journey and academic success with innovative solutions.</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="contact" class="contact">
         <div class="container">
-            <h2>Get Your Project Started with Noahswitch</h2>
-            <form action="#" method="post" class="contact-form">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required>
-
-                <label for="details">Project Details:</label>
-                <textarea id="details" name="details" rows="4" required></textarea>
-
-                <label for="deadline">Deadline:</label>
-                <input type="date" id="deadline" name="deadline" required>
-
-                <label for="language">Preferred Language:</label>
-                <select id="language" name="language" required>
-                    <option value="english">English</option>
-                    <option value="french">French</option>
-                    <option value="arabic">Arabic</option>
-                </select>
-
-                <label for="payment">Preferred Payment Method:</label>
-                <select id="payment" name="payment" required>
-                    <option value="bank-transfer">Bank Transfer</option>
-                    <option value="paypal">PayPal</option>
-                    <option value="credit-card">Credit Card</option>
-                    <option value="cash">Cash</option>
-                </select>
-
-                <label for="contact-time">Best Time to Contact You:</label>
-                <input type="time" id="contact-time" name="contact-time" required>
-
-                <button type="submit">Send Request</button>
-            </form>
-
-            <div class="contact-info">
-                <p>Email: <a href="mailto:cs@noahswitch.com">cs@noahswitch.com</a></p>
-                <p>WhatsApp: <a href="https://wa.me/33678415751" target="_blank">+33 6 78415751</a></p>
-                <p>Facebook: <a href="https://www.facebook.com/nswitchtech" target="_blank">nswitchtech</a></p>
-                <p>Instagram: <a href="https://www.instagram.com/noah_.switch/" target="_blank">noah_.switch</a></p>
+            <h2>Get Your Project Started with NoahSwitch</h2>
+            <div class="contact-wrapper">
+                <form action="#" method="post" class="contact-form">
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="details"><i class="fas fa-file-alt"></i> Project Details</label>
+                        <textarea id="details" name="details" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deadline"><i class="fas fa-calendar"></i> Deadline</label>
+                        <input type="date" id="deadline" name="deadline" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="language"><i class="fas fa-language"></i> Preferred Language</label>
+                        <select id="language" name="language" required>
+                            <option value="english">English</option>
+                            <option value="french">French</option>
+                            <option value="arabic">Arabic</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="payment"><i class="fas fa-credit-card"></i> Preferred Payment Method</label>
+                        <select id="payment" name="payment" required>
+                            <option value="bank-transfer">Bank Transfer</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="credit-card">Credit Card</option>
+                            <option value="cash">Cash</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-time"><i class="fas fa-clock"></i> Best Time to Contact You</label>
+                        <input type="time" id="contact-time" name="contact-time" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Send Request <i class="fas fa-paper-plane"></i></button>
+                </form>
+                
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <p><a href="mailto:cs@noahswitch.com">cs@noahswitch.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>WhatsApp</h4>
+                            <p><a href="https://wa.me/33678415751" target="_blank">+33 6 78415751</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Website</h4>
+                            <p><a href="https://noahswitch.com" target="_blank">noahswitch.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/nswitchtech" target="_blank" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/noah_.switch/" target="_blank" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" target="_blank" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" target="_blank" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>Read more about us at <a href="https://noahswitch.com" target="_blank">Noahswitch.com</a></p>
-            <div class="social-icons">
-                <a href="https://www.facebook.com/nswitchtech" target="_blank">Facebook</a> |
-                <a href="https://www.instagram.com/noah_.switch/" target="_blank">Instagram</a>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>NoahSwitch</h3>
+                    <p>Empowering your digital journey with innovative IT solutions and academic excellence.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/nswitchtech" target="_blank" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/noah_.switch/" target="_blank" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Web Development</a></li>
+                        <li><a href="#services">App Development</a></li>
+                        <li><a href="#services">Academic Support</a></li>
+                        <li><a href="#services">Digital Marketing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:cs@noahswitch.com">cs@noahswitch.com</a></li>
+                        <li><a href="https://wa.me/33678415751">WhatsApp: +33 6 78415751</a></li>
+                        <li><a href="https://noahswitch.com">noahswitch.com</a></li>
+                    </ul>
+                </div>
             </div>
-            <p>&copy; 2025 Noahswitch. All rights reserved.</p>
+            
+            <div class="copyright">
+                <p>&copy; 2025 NoahSwitch. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 </body>
