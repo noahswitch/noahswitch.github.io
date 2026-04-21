@@ -6,7 +6,7 @@
     <meta name="description" content="N Slimani - Systems Engineer & Cloud Administrator with 3+ years of enterprise infrastructure experience. Expert in AWS, Azure, Kubernetes, DevOps automation, and cybersecurity.">
     <meta name="keywords" content="Systems Engineer, Cloud Administrator, AWS, Azure, DevOps, Kubernetes, Docker, Infrastructure, Cybersecurity">
     <meta name="author" content="N Slimani">
-    <title>N Slimani | Systems Engineer & Cloud Administrator</title>
+    <title>N Slimani | Systems Engineer · Cloud Architect · ML Researcher</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
@@ -752,7 +752,124 @@
             font-style: italic;
             color: var(--text-light);
         }
+        /* ========================================
+           RESEARCH SECTION
+           ======================================== */
+<style>
+  /* ── Research Section ── */
+  #research { padding: 4rem 0; }
+  #research h2 { margin-bottom: 0.5rem; }
+  #research > p { color: #666; margin-bottom: 2rem; }
 
+  .research-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 2rem;
+    background: #fafafa;
+    transition: box-shadow 0.2s ease;
+  }
+  .research-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+  .research-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  .research-tag {
+    font-size: 0.75rem;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-weight: 500;
+  }
+  .research-year {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-left: auto;
+  }
+
+  .research-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+  .research-card p { color: #555; line-height: 1.7; margin-bottom: 1rem; }
+  .research-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+  }
+  .research-card ul li {
+    padding: 0.3rem 0 0.3rem 1.25rem;
+    position: relative;
+    color: #444;
+    font-size: 0.9rem;
+  }
+  .research-card ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #1d4ed8;
+  }
+
+  .research-link {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1d4ed8;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .research-link:hover { border-color: #1d4ed8; }
+</style>
+
+           /* ========================================
+           INTERESTS SECTION
+           ======================================== */
+<style>
+  /* ── Interests Section ── */
+  #interests { padding: 4rem 0; }
+  #interests h2 { margin-bottom: 0.5rem; }
+  #interests > p { color: #666; margin-bottom: 2rem; }
+
+  .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .interest-item {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .interest-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+  }
+
+  .interest-icon { font-size: 1.75rem; display: block; margin-bottom: 0.75rem; }
+
+  .interest-item h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #111;
+  }
+  .interest-item p {
+    font-size: 0.85rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>
         /* ========================================
            Skills Section
            ======================================== */
@@ -1398,11 +1515,14 @@
             <ul class="nav-menu">
                 <li><a href="#hero" class="nav-link">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
+                <a href="#research" class="nav-link">Research</a>
+                <a href="#interests" class="nav-link">Interests</a>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#education" class="nav-link">Education</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -1463,23 +1583,17 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p class="lead">
-                        I am a Systems Engineer and Cloud Administrator with over 3 years of enterprise infrastructure experience, currently based in Budapest, Hungary. I specialize in managing complex IT environments, having successfully administered infrastructure for 145+ user organizations while implementing cutting-edge cloud solutions and DevOps practices.
-                    </p>
-                    <p>
-                        My expertise spans cloud architecture with AWS and Azure, containerization using Docker and Kubernetes, and implementing comprehensive cybersecurity frameworks. I have a proven track record of reducing operational costs by 40% through strategic cloud migration and Infrastructure as Code practices. My approach combines technical excellence with business acumen, ensuring that infrastructure solutions not only meet technical requirements but also drive organizational efficiency and cost savings.
-                    </p>
-                    <p>
-                        With a Master's degree in Computer Engineering from Széchenyi István University and hands-on experience across multi-platform system administration, CI/CD pipelines, and zero-trust security frameworks, I bring a comprehensive skill set to tackle modern infrastructure challenges. I am passionate about automation, security, and building resilient systems that scale.
-                    </p>
+                    <p class="lead"> I'm Nasreddine Slimani, a Systems Engineer and Cloud Architect based in Budapest,  Hungary. I build and secure the infrastructure that keeps organizations running but  what drives me is the intersection of reliable systems and intelligent automation. My work ranges from managing enterprise cloud environments to applying machine learning  to real-world data problems. </p>
+                    <p>I hold a Master's degree in Computer Engineering (with Excellent distinction) from  Széchenyi István University, where my thesis on Twitter sentiment analysis using neural  networks shaped my interest in AI-powered systems. That academic background informs how I approach infrastructure not just as plumbing to maintain, but as a platform to  build intelligent, data-driven solutions on top of. </p>
+                    <p> </p>
                     <div class="about-highlights">
                         <div class="highlight-item">
                             <i class="fas fa-users"></i>
-                            <span>145+ User Environment</span>
+                            <span>150+ User Environment</span>
                         </div>
                         <div class="highlight-item">
                             <i class="fas fa-chart-line"></i>
-                            <span>40% Cost Reduction</span>
+                            <span>Cost Reduction</span>
                         </div>
                         <div class="highlight-item">
                             <i class="fas fa-shield-alt"></i>
@@ -1494,7 +1608,82 @@
             </div>
         </div>
     </section>
+<!-- ═══════════════ RESEARCH SECTION ═══════════════ -->
+<section id="research">
+  <h2>Research</h2>
+  <p>
+    Exploring the intersection of NLP, federated learning, and low-resource Arabic dialects.
+  </p>
 
+  <div class="research-card">
+    <div class="research-meta">
+      <span class="research-tag">NLP</span>
+      <span class="research-tag">Federated Learning</span>
+      <span class="research-tag">Arabic Dialect</span>
+      <span class="research-year">2024</span>
+    </div>
+
+    <h3>Federated Fine-Tuning of DziriBERT for Algerian Dialect Sentiment Analysis</h3>
+
+    <p>
+      Investigated privacy-preserving federated learning strategies for fine-tuning 
+      DziriBERT — a BERT-based model for Algerian Arabizi — on a sentiment analysis task. 
+      Evaluated FedAvg, FedProx, semi-supervised federated learning (SSFL), and DistilBERT 
+      under non-IID data distributions across 10 clients.
+    </p>
+
+    <ul>
+      <li>FedAvg achieved <strong>84.8% accuracy</strong> — within 1.5% of the centralized baseline (86.3%)</li>
+      <li>FedProx (μ=0.01) matched FedAvg with faster early-round convergence</li>
+      <li>SSFL reached <strong>80.7%</strong> using only 20% labeled clients</li>
+      <li>DistilBERT (67M params vs 124M) achieved 81.4% with significant efficiency gains</li>
+    </ul>
+
+    <a href="research-dziribert/index.html" class="research-link">
+      View Full Paper & Results →
+    </a>
+  </div>
+</section>
+
+    <!-- ═══════════════ INTERESTS SECTION ═══════════════ -->
+<section id="interests">
+  <h2>Topics of Interest</h2>
+  <p>Areas I actively explore, read about, and experiment with.</p>
+
+  <div class="interests-grid">
+
+    <div class="interest-item">
+      <span class="interest-icon">🧠</span>
+      <h4>NLP & Large Language Models</h4>
+      <p>BERT-family models, Arabic/dialect NLP, low-resource language adaptation, prompt engineering.</p>
+    </div>
+
+    <div class="interest-item">
+      <span class="interest-icon">🔐</span>
+      <h4>Federated & Privacy-Preserving ML</h4>
+      <p>FedAvg, FedProx, differential privacy, secure aggregation, semi-supervised federated learning.</p>
+    </div>
+
+    <div class="interest-item">
+      <span class="interest-icon">☁️</span>
+      <h4>Cloud Architecture & DevOps</h4>
+      <p>AWS, Azure, Kubernetes, Infrastructure as Code, CI/CD pipelines, zero-trust security.</p>
+    </div>
+
+    <div class="interest-item">
+      <span class="interest-icon">📊</span>
+      <h4>Data Engineering & MLOps</h4>
+      <p>Model deployment pipelines, experiment tracking, monitoring, scalable data systems.</p>
+    </div>
+    <div class="interest-item">
+      <span class="interest-icon">🤖</span>
+      <h4>Autonomous & Intelligent Systems</h4>
+      <p>Sentiment analysis, classification systems, real-time AI pipelines, decision automation.</p>
+    </div>
+
+  </div>
+</section>
+    
     <!-- Experience Section -->
     <section id="experience" class="section section-dark">
         <div class="container">
