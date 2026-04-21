@@ -10,63 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
   <style>
-
-
-    html {
-      -webkit-text-size-adjust: 100%;
-    }
-    
-    body {
-      margin: 0;
-      overflow-x: hidden;
-      font-size: 16px;
-      line-height: 1.6;
-      padding-left: max(16px, env(safe-area-inset-left));
-      padding-right: max(16px, env(safe-area-inset-right));
-      padding-bottom: max(16px, env(safe-area-inset-bottom));
-    }
-    .site-header {
-      padding-top: max(12px, env(safe-area-inset-top));
-    }
-    
-    .site-footer,
-    .bottom-nav,
-    .floating-controls {
-      padding-bottom: max(12px, env(safe-area-inset-bottom));
-    }
-    .container {
-      width: min(100% - 24px, 1100px);
-      margin-inline: auto;
-    }
-    
-    img,
-    video,
-    iframe,
-    canvas,
-    svg {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-    
-    table {
-      display: block;
-      overflow-x: auto;
-      width: 100%;
-      -webkit-overflow-scrolling: touch;
-    }
-    
-    pre,
-    code {
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    
-    a,
-    button {
-      min-height: 48px;
-      min-width: 48px;
-    }
     :root{
       --bg:#0b1220;
       --bg-2:#101a2d;
@@ -80,76 +23,259 @@
       --danger:#f87171;
       --shadow:0 20px 60px rgba(0,0,0,.35);
     }
+  
     *{box-sizing:border-box}
-    html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(circle at top right, rgba(96,165,250,.16), transparent 28%), radial-gradient(circle at left bottom, rgba(110,231,183,.12), transparent 30%), linear-gradient(135deg, var(--bg), var(--bg-2)); color:var(--text); font-family:Inter,sans-serif}
-    .deck{position:relative;width:100vw;height:100vh}
-    .slide{position:absolute;inset:0;padding:48px 56px;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:scale(.98);transition:.45s ease;pointer-events:none}
-    .slide.active{opacity:1;transform:scale(1);pointer-events:auto}
-    .glass{background:var(--panel);border:1px solid var(--border);backdrop-filter:blur(14px);border-radius:24px;box-shadow:var(--shadow)}
-    .eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:var(--accent);font-weight:700;margin-bottom:12px}
+  
+    html{
+      -webkit-text-size-adjust:100%;
+      margin:0;
+      height:100%;
+      overflow:hidden;
+    }
+  
+    body{
+      margin:0;
+      height:100%;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at top right, rgba(96,165,250,.16), transparent 28%),
+        radial-gradient(circle at left bottom, rgba(110,231,183,.12), transparent 30%),
+        linear-gradient(135deg, var(--bg), var(--bg-2));
+      color:var(--text);
+      font-family:Inter,sans-serif;
+    }
+  
+    img,video,iframe,canvas,svg{
+      max-width:100%;
+      height:auto;
+      display:block;
+    }
+  
+    .deck{
+      position:relative;
+      width:100vw;
+      height:100vh;
+    }
+  
+    .slide{
+      position:absolute;
+      inset:0;
+      padding:clamp(20px, 4vw, 48px);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:18px;
+      opacity:0;
+      transform:scale(.985);
+      transition:opacity .45s ease, transform .45s ease;
+      pointer-events:none;
+      overflow:hidden;
+    }
+  
+    .slide.active{
+      opacity:1;
+      transform:scale(1);
+      pointer-events:auto;
+    }
+  
+    .slide-inner{
+      width:min(1180px, 100%);
+      margin:0 auto;
+    }
+  
+    .glass{
+      background:var(--panel);
+      border:1px solid var(--border);
+      backdrop-filter:blur(14px);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+    }
+  
+    .eyebrow{
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:12px;
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:12px;
+    }
+  
     h1,h2,h3{margin:0}
-    h1{font-family:"Playfair Display",serif;font-size:64px;line-height:1.02;margin-bottom:16px}
-    h2{font-size:38px;margin-bottom:18px}
-    p{font-size:18px;line-height:1.6;color:var(--muted);margin:0}
-    ul{margin:0;padding-left:20px}
-    li{margin:10px 0;color:var(--text);font-size:18px;line-height:1.45}
-    .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}
-    .hero-card{padding:34px}
-    .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px}
-    .metric{padding:18px 16px}
-    .metric .v{font-size:30px;font-weight:800;color:var(--accent)}
-    .metric .l{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:6px}
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
-    .card{padding:24px}
-    .img-wrap{display:flex;align-items:center;justify-content:center;height:100%;padding:12px}
-    .img-wrap img{max-width:100%;max-height:72vh;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--border)}
-    .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}
-    .step{padding:18px}
-    .step b{display:block;font-size:15px;color:var(--accent2);margin-bottom:8px}
-    .step span{font-size:15px;color:var(--muted);line-height:1.45}
-    .qa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-    .small{font-size:15px;color:var(--muted)}
-    .footer{position:absolute;left:56px;right:56px;bottom:24px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
-    .nav{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;background:rgba(11,18,32,.78);border:1px solid var(--border);padding:10px 14px;border-radius:999px;backdrop-filter:blur(10px);z-index:10}
-    .btn{background:var(--panel);color:var(--text);border:1px solid var(--border);width:40px;height:40px;border-radius:999px;font-size:18px;cursor:pointer}
-    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer}
-    .dot.active{background:var(--accent)}
-    .tag{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(110,231,183,.12);border:1px solid rgba(110,231,183,.25);font-size:13px;color:#d7fff0;font-weight:600;margin:6px 8px 0 0}
-    .codebox{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;line-height:1.45;color:#dbeafe;background:rgba(2,6,23,.55);border:1px solid var(--border);padding:18px;border-radius:18px}
+    h1{
+      font-family:"Playfair Display",serif;
+      font-size:clamp(2rem, 5vw, 4rem);
+      line-height:1.05;
+      margin-bottom:14px;
+    }
+  
+    h2{
+      font-size:clamp(1.6rem, 3vw, 2.4rem);
+      line-height:1.15;
+      margin-bottom:16px;
+    }
+  
+    p{
+      font-size:clamp(.95rem, 1.5vw, 1.05rem);
+      line-height:1.55;
+      color:var(--muted);
+      margin:0;
+    }
+  
+    ul{
+      margin:0;
+      padding-left:18px;
+    }
+  
+    li{
+      margin:10px 0;
+      color:var(--text);
+      font-size:clamp(.95rem, 1.35vw, 1.05rem);
+      line-height:1.42;
+    }
+  
+    .hero{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:24px;
+      align-items:stretch;
+    }
+  
+    .hero-card,.card,.metric,.step{
+      padding:22px;
+    }
+  
+    .metric-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+  
+    .metric .v{
+      font-size:clamp(1.35rem, 2.5vw, 1.9rem);
+      font-weight:800;
+      color:var(--accent);
+    }
+  
+    .metric .l{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-top:6px;
+    }
+  
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+      align-items:start;
+    }
+  
+    .timeline{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+      margin-top:16px;
+    }
+  
+    .step b{
+      display:block;
+      font-size:15px;
+      color:var(--accent2);
+      margin-bottom:8px;
+    }
+  
+    .step span,
+    .small{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+  
+    .tag{
+      display:inline-flex;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(110,231,183,.12);
+      border:1px solid rgba(110,231,183,.25);
+      font-size:13px;
+      color:#d7fff0;
+      font-weight:600;
+      margin:6px 8px 0 0;
+    }
+  
+    .slide-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:10px;
+    }
+  
     a{color:var(--accent)}
-
-    @media (max-width: 768px) {
+  
+    .nav{
+      position:fixed;
+      bottom:18px;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      gap:10px;
+      align-items:center;
+      background:rgba(11,18,32,.78);
+      border:1px solid var(--border);
+      padding:10px 14px;
+      border-radius:999px;
+      backdrop-filter:blur(10px);
+      z-index:20;
+    }
+  
+    .btn{
+      background:var(--panel);
+      color:var(--text);
+      border:1px solid var(--border);
+      width:42px;
+      height:42px;
+      min-width:42px;
+      min-height:42px;
+      border-radius:999px;
+      font-size:18px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+  
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:rgba(255,255,255,.18);
+      cursor:pointer;
+    }
+  
+    .dot.active{background:var(--accent)}
+  
+    @media (max-width: 900px){
+      .slide{
+        justify-content:flex-start;
+        padding:20px 18px 88px;
+        overflow:auto;
+      }
+  
       .hero,
-      .paper-hero {
-        padding-top: 96px;
-        padding-bottom: 40px;
+      .two-col,
+      .timeline,
+      .metric-grid{
+        grid-template-columns:1fr;
       }
-    
-      .hero h1,
-      .paper-hero h1 {
-        font-size: 2rem;
-        line-height: 1.2;
-      }
-    
-      .nav-links {
-        display: none;
-      }
-    
-      .section {
-        padding: 32px 0;
-      }
-    
-      .card,
-      .result-card,
-      .summary-card {
-        padding: 16px;
-        border-radius: 14px;
-      }
-    
-      .button,
-      .btn {
-        width: 100%;
-        justify-content: center;
+  
+      .slide-meta{
+        flex-direction:column;
+        align-items:flex-start;
       }
     }
   </style>
@@ -158,42 +284,50 @@
 <div class="deck">
 
 <section class="slide active" data-slide="1">
-  <div class="hero">
-    <div class="hero-card glass">
-      <div class="eyebrow">Research Presentation</div>
-      <h2>Federated Fine-Tuning of DziriBERT for Algerian Dialect Sentiment Analysis</h2>
-      <p>This presentation provides an overview of our work, highlights the key findings, and explains why FedAvg and FedProx were chosen for non-IID federated learning on Algerian social media sentiment analysis.</p>
-<p style="margin-top:14px">
-  <a href="https://drive.google.com/file/d/1w7m2yOWsw8Z6S_mMiC24AMNnoWcwqPXF/view?usp=sharing" target="_blank">
-    📄 View Full Conference Paper
-  </a>
-</p>
-      <div style="margin-top:18px">
-        <span class="tag">DziriBERT</span>
-        <span class="tag">FedAvg</span>
-        <span class="tag">FedProx</span>
-        <span class="tag">Non-IID Clients</span>
-        <span class="tag">Conference Paper</span>
+  <div class="slide-inner">
+    <div class="hero">
+      <div class="hero-card glass">
+        <div class="eyebrow">Research Presentation</div>
+        <h1>Federated Fine-Tuning of DziriBERT for Algerian Dialect Sentiment Analysis</h1>
+        <p>This presentation provides an overview of our work, highlights the key findings, and explains why FedAvg and FedProx were chosen for non-IID federated learning on Algerian social media sentiment analysis.</p>
+
+        <p style="margin-top:14px">
+          <a href="https://drive.google.com/file/d/1w7m2yOWsw8Z6S_mMiC24AMNnoWcwqPXF/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+            📄 View Full Conference Paper
+          </a>
+        </p>
+
+        <div style="margin-top:18px">
+          <span class="tag">DziriBERT</span>
+          <span class="tag">FedAvg</span>
+          <span class="tag">FedProx</span>
+          <span class="tag">Non-IID Clients</span>
+          <span class="tag">Conference Paper</span>
+        </div>
+      </div>
+
+      <div class="hero-card glass">
+        <div class="eyebrow">At a glance</div>
+        <div class="metric-grid" style="grid-template-columns:repeat(2,1fr)">
+          <div class="metric glass"><div class="v">13,260</div><div class="l">Comments</div></div>
+          <div class="metric glass"><div class="v">10</div><div class="l">Clients</div></div>
+          <div class="metric glass"><div class="v">0.8635</div><div class="l">Central Accuracy</div></div>
+          <div class="metric glass"><div class="v">0.8541</div><div class="l">Best FL Accuracy</div></div>
+        </div>
       </div>
     </div>
-    <div class="hero-card glass">
-      <div class="eyebrow">At a glance</div>
-      <div class="metric-grid" style="grid-template-columns:repeat(2,1fr)">
-        <div class="metric glass"><div class="v">13,260</div><div class="l">Comments</div></div>
-        <div class="metric glass"><div class="v">10</div><div class="l">Clients</div></div>
-        <div class="metric glass"><div class="v">0.8635</div><div class="l">Central Accuracy</div></div>
-        <div class="metric glass"><div class="v">0.8541</div><div class="l">Best FL Accuracy</div></div>
+
+    <div class="slide-meta">
+      <div>
+        Presented at
+        <a href="https://events.univ-relizane.dz/event/6/" target="_blank" rel="noopener noreferrer">
+          AIDaM’26 – 1st National Conference on Artificial Intelligence and Data Management
+        </a><br>
+        University Ahmed Zabana of Relizane, Algeria · April 20, 2026
       </div>
+      <div>N Slimani · 1 / 7</div>
     </div>
   </div>
-  <div class="footer"><span>N Slimani · Portfolio Research Showcase</span><span>1 / 7</span></div>
-<p class="small" style="margin-top:10px">
-  Presented at 
-  <a href="https://events.univ-relizane.dz/event/6/" target="_blank">
-    AIDaM’26 – 1st National Conference on Artificial Intelligence and Data Management
-  </a><br>
-  University Ahmed Zabana of Relizane, Algeria · April 20, 2026
-</p>
 </section>
 
 <section class="slide" data-slide="2">
@@ -349,27 +483,60 @@
 </div>
 
 <script>
-const slides=[...document.querySelectorAll('.slide')];
-const dotsWrap=document.getElementById('dots');
-let current=0;
-slides.forEach((_,i)=>{
-  const d=document.createElement('div');
-  d.className='dot'+(i===0?' active':'');
-  d.onclick=()=>go(i);
-  dotsWrap.appendChild(d);
-});
-function go(i){
-  slides[current].classList.remove('active');
-  dotsWrap.children[current].classList.remove('active');
-  current=(i+slides.length)%slides.length;
-  slides[current].classList.add('active');
-  dotsWrap.children[current].classList.add('active');
-}
-function move(n){go(current+n)}
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight' || e.key===' ') move(1);
-  if(e.key==='ArrowLeft') move(-1);
-});
+  const slides = [...document.querySelectorAll('.slide')];
+  const dotsWrap = document.getElementById('dots');
+  let current = 0;
+
+  if (slides.length && dotsWrap) {
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      dot.addEventListener('click', () => go(i));
+      dotsWrap.appendChild(dot);
+    });
+  }
+
+  function go(i) {
+    if (!slides.length) return;
+
+    slides[current].classList.remove('active');
+    dotsWrap.children[current]?.classList.remove('active');
+
+    current = (i + slides.length) % slides.length;
+
+    slides[current].classList.add('active');
+    dotsWrap.children[current]?.classList.add('active');
+  }
+
+  function move(n) {
+    go(current + n);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      move(1);
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      move(-1);
+    }
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+  });
+
+  document.addEventListener('touchend', e => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const deltaX = touchStartX - touchEndX;
+    if (Math.abs(deltaX) > 50) {
+      move(deltaX > 0 ? 1 : -1);
+    }
+  });
 </script>
 </body>
 </html>
