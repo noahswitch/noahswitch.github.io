@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="slides-format" content="viewport" />
+  <title>Federated Fine-Tuning of DziriBERT for Algerian Dialect Sentiment Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1220;
+      --bg-2:#101a2d;
+      --panel:rgba(255,255,255,0.06);
+      --border:rgba(255,255,255,0.12);
+      --text:#e8eefc;
+      --muted:#a6b3cc;
+      --accent:#6ee7b7;
+      --accent2:#60a5fa;
+      --accent3:#f59e0b;
+      --danger:#f87171;
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(circle at top right, rgba(96,165,250,.16), transparent 28%), radial-gradient(circle at left bottom, rgba(110,231,183,.12), transparent 30%), linear-gradient(135deg, var(--bg), var(--bg-2)); color:var(--text); font-family:Inter,sans-serif}
+    .deck{position:relative;width:100vw;height:100vh}
+    .slide{position:absolute;inset:0;padding:48px 56px;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:scale(.98);transition:.45s ease;pointer-events:none}
+    .slide.active{opacity:1;transform:scale(1);pointer-events:auto}
+    .glass{background:var(--panel);border:1px solid var(--border);backdrop-filter:blur(14px);border-radius:24px;box-shadow:var(--shadow)}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:var(--accent);font-weight:700;margin-bottom:12px}
+    h1,h2,h3{margin:0}
+    h1{font-family:"Playfair Display",serif;font-size:64px;line-height:1.02;margin-bottom:16px}
+    h2{font-size:38px;margin-bottom:18px}
+    p{font-size:18px;line-height:1.6;color:var(--muted);margin:0}
+    ul{margin:0;padding-left:20px}
+    li{margin:10px 0;color:var(--text);font-size:18px;line-height:1.45}
+    .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}
+    .hero-card{padding:34px}
+    .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px}
+    .metric{padding:18px 16px}
+    .metric .v{font-size:30px;font-weight:800;color:var(--accent)}
+    .metric .l{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:6px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+    .card{padding:24px}
+    .img-wrap{display:flex;align-items:center;justify-content:center;height:100%;padding:12px}
+    .img-wrap img{max-width:100%;max-height:72vh;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--border)}
+    .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}
+    .step{padding:18px}
+    .step b{display:block;font-size:15px;color:var(--accent2);margin-bottom:8px}
+    .step span{font-size:15px;color:var(--muted);line-height:1.45}
+    .qa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .small{font-size:15px;color:var(--muted)}
+    .footer{position:absolute;left:56px;right:56px;bottom:24px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
+    .nav{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;background:rgba(11,18,32,.78);border:1px solid var(--border);padding:10px 14px;border-radius:999px;backdrop-filter:blur(10px);z-index:10}
+    .btn{background:var(--panel);color:var(--text);border:1px solid var(--border);width:40px;height:40px;border-radius:999px;font-size:18px;cursor:pointer}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer}
+    .dot.active{background:var(--accent)}
+    .tag{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(110,231,183,.12);border:1px solid rgba(110,231,183,.25);font-size:13px;color:#d7fff0;font-weight:600;margin:6px 8px 0 0}
+    .codebox{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;line-height:1.45;color:#dbeafe;background:rgba(2,6,23,.55);border:1px solid var(--border);padding:18px;border-radius:18px}
+    a{color:var(--accent)}
+  </style>
+</head>
+<body>
+<div class="deck">
+
+<section class="slide active" data-slide="1">
+  <div class="hero">
+    <div class="hero-card glass">
+      <div class="eyebrow">Research Presentation</div>
+      <h2>Federated Fine-Tuning of DziriBERT for Algerian Dialect Sentiment Analysis</h2>
+      <p>This presentation provides an overview of our work, highlights the key findings, and explains why FedAvg and FedProx were chosen for non-IID federated learning on Algerian social media sentiment analysis.</p>
+<p style="margin-top:14px">
+  <a href="https://drive.google.com/file/d/1w7m2yOWsw8Z6S_mMiC24AMNnoWcwqPXF/view?usp=sharing" target="_blank">
+    📄 View Full Conference Paper
+  </a>
+</p>
+      <div style="margin-top:18px">
+        <span class="tag">DziriBERT</span>
+        <span class="tag">FedAvg</span>
+        <span class="tag">FedProx</span>
+        <span class="tag">Non-IID Clients</span>
+        <span class="tag">Conference Paper</span>
+      </div>
+    </div>
+    <div class="hero-card glass">
+      <div class="eyebrow">At a glance</div>
+      <div class="metric-grid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="metric glass"><div class="v">13,260</div><div class="l">Comments</div></div>
+        <div class="metric glass"><div class="v">10</div><div class="l">Clients</div></div>
+        <div class="metric glass"><div class="v">0.8635</div><div class="l">Central Accuracy</div></div>
+        <div class="metric glass"><div class="v">0.8541</div><div class="l">Best FL Accuracy</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>N Slimani · Portfolio Research Showcase</span><span>1 / 7</span></div>
+<p class="small" style="margin-top:10px">
+  Presented at 
+  <a href="https://events.univ-relizane.dz/event/6/" target="_blank">
+    AIDaM’26 – 1st National Conference on Artificial Intelligence and Data Management
+  </a><br>
+  University Ahmed Zabana of Relizane, Algeria · April 20, 2026
+</p>
+</section>
+
+<section class="slide" data-slide="2">
+  <h2>Problem and Motivation</h2>
+  <div class="two-col">
+    <div class="card glass">
+      <div class="eyebrow">Challenge</div>
+      <ul>
+        <li>Sentiment analysis for Algerian dialect is difficult because of code-switching, Arabizi, mixed scripts, and noisy social media text.</li>
+        <li>Centralized training is strong, but real institutions often cannot share raw user data because of privacy and governance constraints.</li>
+        <li>Federated learning allows collaborative model training while keeping raw data local.</li>
+      </ul>
+    </div>
+    <div class="card glass">
+      <div class="eyebrow">Research Goal</div>
+      <ul>
+        <li>Test whether DziriBERT can still perform well when fine-tuned in a federated setting.</li>
+        <li>Compare simple FL optimization methods on highly non-IID client partitions.</li>
+        <li>Measure the trade-off between privacy-friendly training and performance drop.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer"><span>Why this paper matters</span><span>2 / 7</span></div>
+</section>
+
+<section class="slide" data-slide="3">
+  <h2>Dataset and Experimental Setup</h2>
+  <div class="two-col">
+    <div class="card glass">
+      <div class="eyebrow">Dataset</div>
+      <ul>
+        <li>13,260 X-platform comments, balanced binary sentiment labels.</li>
+        <li>54.2% Latin-script, 38.4% Arabic script, 7.4% mixed script.</li>
+        <li>Split into 70% train, 10% validation, 20% test.</li>
+        <li>Train split partitioned into 10 highly non-IID clients using Dirichlet α = 0.5.</li>
+      </ul>
+    </div>
+    <div class="card glass">
+      <div class="eyebrow">Protocol</div>
+      <ul>
+        <li>15 global rounds, 10 clients total, 5 sampled per round.</li>
+        <li>1 local epoch per round, local batch size 8.</li>
+        <li>AdamW optimizer, learning rate 2e-5, gradient clipping 1.0.</li>
+        <li>Token length fixed to 128 for consistency across methods.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer"><span>What was trained and how</span><span>3 / 7</span></div>
+</section>
+
+<section class="slide" data-slide="4">
+  <h2>Why FedAvg?</h2>
+  <div class="two-col">
+    <div class="card glass">
+      <div class="eyebrow">Why choose it</div>
+      <ul>
+        <li>FedAvg is the standard baseline in federated learning and is the most interpretable starting point.</li>
+        <li>It is simple to implement, widely cited, and gives a fair reference for future work.</li>
+        <li>For a first benchmark study in Algerian dialect FL, starting with the canonical algorithm is academically justified.</li>
+      </ul>
+    </div>
+    <div class="card glass">
+      <div class="eyebrow">How it works</div>
+      <ul>
+        <li>The server sends the current global model to selected clients.</li>
+        <li>Each client trains locally on its own data for one epoch.</li>
+        <li>The server averages client model parameters weighted by local sample counts.</li>
+        <li>Result: efficient and easy, but sensitive to client drift under non-IID data.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer"><span>Core baseline explanation</span><span>4 / 7</span></div>
+</section>
+
+<section class="slide" data-slide="5">
+  <h2>Why FedProx?</h2>
+  <div class="two-col">
+    <div class="card glass">
+      <div class="eyebrow">Why choose it</div>
+      <ul>
+        <li>FedProx is a natural upgrade over FedAvg when clients are heterogeneous and non-IID.</li>
+        <li>The paper had severe client imbalance, from 4 to 5003 samples, so update drift was a serious risk.</li>
+        <li>FedProx directly targets that problem while keeping the same overall FL structure.</li>
+      </ul>
+    </div>
+    <div class="card glass">
+      <div class="eyebrow">How it works</div>
+      <ul>
+        <li>FedProx adds a proximal penalty to the local loss.</li>
+        <li>This penalty discourages each client model from moving too far away from the current global model.</li>
+        <li>That means more stable local updates and less divergence across heterogeneous clients.</li>
+        <li>In simple words: it keeps local training useful without letting each client over-specialize too much.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer"><span>Why FedProx was the right comparison</span><span>5 / 7</span></div>
+</section>
+
+<section class="slide" data-slide="6">
+  <h2>Why These Parameters?</h2>
+  <div class="timeline">
+    <div class="step glass"><b>α = 0.5</b><span>Chosen to create meaningfully heterogeneous non-IID clients instead of easy near-IID partitions.</span></div>
+    <div class="step glass"><b>R = 15 rounds</b><span>Enough to show convergence trends without making the benchmark too expensive.</span></div>
+    <div class="step glass"><b>m = 5 clients</b><span>50% participation balances realism and stable aggregation each round.</span></div>
+    <div class="step glass"><b>LR = 2e-5</b><span>Standard safe fine-tuning rate for transformer models to avoid destabilizing pretrained weights.</span></div>
+    <div class="step glass"><b>μ = 0.01</b><span>Heuristic FedProx value: strong enough to regularize drift, small enough not to freeze learning.</span></div>
+  </div>
+  <div class="card glass" style="margin-top:20px">
+    
+    <p>These were reasonable benchmark parameters rather than fully optimized hyperparameters. The paper explicitly states that μ sweeps, α sweeps, and multi-seed evaluation are future work, so the contribution is a strong first benchmark, not a final tuned system.</p>
+  </div>
+  <div class="footer"><span>Defending hyperparameter choices</span><span>6 / 7</span></div>
+</section>
+
+<section class="slide" data-slide="7">
+  <h2>Results Summary</h2>
+  <div class="metric-grid">
+    <div class="metric glass"><div class="v">0.8635</div><div class="l">Centralized DziriBERT</div></div>
+    <div class="metric glass"><div class="v">0.8477</div><div class="l">FedAvg</div></div>
+    <div class="metric glass"><div class="v">0.8541</div><div class="l">FedProx</div></div>
+    <div class="metric glass"><div class="v">0.8069</div><div class="l">SSFL</div></div>
+  </div>
+  <div class="two-col" style="margin-top:24px">
+    <div class="card glass">
+      <div class="eyebrow">Main takeaway</div>
+      <ul>
+        <li>Centralized training remains best overall.</li>
+        <li>FedProx is the strongest federated method in this study.</li>
+        <li>FedProx reduces the gap to centralized training to less than 1 percentage point.</li>
+      </ul>
+    </div>
+    <div class="card glass">
+      <div class="eyebrow">Interpretation</div>
+      <ul>
+        <li>FedAvg is good as a baseline, but non-IID client drift hurts it.</li>
+        <li>FedProx improves stability under heterogeneous data.</li>
+        <li>Simple pseudo-labeling works, but there is a clear cost when only 20% of clients are labeled.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer"><span>What the experiments showed</span><span>7 / 7</span></div>
+</section>
+
+
+
+
+</div>
+
+<div class="nav">
+  <button class="btn" onclick="move(-1)">‹</button>
+  <div id="dots" style="display:flex;gap:8px"></div>
+  <button class="btn" onclick="move(1)">›</button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const dotsWrap=document.getElementById('dots');
+let current=0;
+slides.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>go(i);
+  dotsWrap.appendChild(d);
+});
+function go(i){
+  slides[current].classList.remove('active');
+  dotsWrap.children[current].classList.remove('active');
+  current=(i+slides.length)%slides.length;
+  slides[current].classList.add('active');
+  dotsWrap.children[current].classList.add('active');
+}
+function move(n){go(current+n)}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight' || e.key===' ') move(1);
+  if(e.key==='ArrowLeft') move(-1);
+});
+</script>
+</body>
+</html>
