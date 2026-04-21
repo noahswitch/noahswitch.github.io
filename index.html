@@ -1501,16 +1501,15 @@
                 <span class="nav-text">NS</span>
             </div>
             <ul class="nav-menu">
-                <li><a href="#hero" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <a href="#research" class="nav-link">Research</a>
-                <a href="#interests" class="nav-link">Interests</a>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#education" class="nav-link">Education</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                
+              <li><a href="#hero" class="nav-link">Home</a></li>
+              <li><a href="#about" class="nav-link">About</a></li>
+              <li><a href="#research" class="nav-link">Research</a></li>
+              <li><a href="#interests" class="nav-link">Interests</a></li>
+              <li><a href="#experience" class="nav-link">Experience</a></li>
+              <li><a href="#education" class="nav-link">Education</a></li>
+              <li><a href="#skills" class="nav-link">Skills</a></li>
+              <li><a href="#projects" class="nav-link">Projects</a></li>
+              <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -1597,78 +1596,71 @@
         </div>
     </section>
 <!-- ═══════════════ RESEARCH SECTION ═══════════════ -->
-<section id="research">
-  <h2>Research</h2>
-  <p>
-    Exploring the intersection of NLP, federated learning, and low-resource Arabic dialects.
-  </p>
-
-  <div class="research-card">
-    <div class="research-meta">
-      <span class="research-tag">NLP</span>
-      <span class="research-tag">Federated Learning</span>
-      <span class="research-tag">Arabic Dialect</span>
-      <span class="research-year">2024</span>
+<section id="research" class="section">
+  <div class="container">
+    <h2 class="section-title">Research</h2>
+    <div class="project-card">
+      <div class="project-header">
+        <i class="fas fa-brain"></i>
+        <h3>Federated Fine-Tuning of DziriBERT</h3>
+        <span class="project-year">2026</span>
+      </div>
+      <p class="project-description">
+        Exploring privacy-preserving NLP for Algerian dialect sentiment analysis using federated learning.
+      </p>
+      <div class="project-tech">
+        <span>NLP</span>
+        <span>Federated Learning</span>
+        <span>DziriBERT</span>
+        <span>Arabic Dialect AI</span>
+      </div>
+      <div class="project-highlights">
+        <ul>
+          <li>FedAvg reached 84.8% accuracy, close to the centralized baseline.</li>
+          <li>FedProx improved convergence stability under non-IID client data.</li>
+          <li>SSFL reduced labeling requirements while maintaining useful performance.</li>
+          <li>DistilBERT offered a lighter alternative with competitive results.</li>
+        </ul>
+      </div>
     </div>
-
-    <h3>Federated Fine-Tuning of DziriBERT for Algerian Dialect Sentiment Analysis</h3>
-
-    <p>
-      Investigated privacy-preserving federated learning strategies for fine-tuning 
-      DziriBERT — a BERT-based model for Algerian Arabizi — on a sentiment analysis task. 
-      Evaluated FedAvg, FedProx, semi-supervised federated learning (SSFL), and DistilBERT 
-      under non-IID data distributions across 10 clients.
-    </p>
-
-    <ul>
-      <li>FedAvg achieved <strong>84.8% accuracy</strong> — within 1.5% of the centralized baseline (86.3%)</li>
-      <li>FedProx (μ=0.01) matched FedAvg with faster early-round convergence</li>
-      <li>SSFL reached <strong>80.7%</strong> using only 20% labeled clients</li>
-      <li>DistilBERT (67M params vs 124M) achieved 81.4% with significant efficiency gains</li>
-    </ul>
-
-    <a href="research-dziribert/index.html" class="research-link">
-      View Full Paper & Results →
-    </a>
   </div>
 </section>
+<!-- ═══════════════ Interests SECTION ═══════════════ -->
 
-    <!-- ═══════════════ INTERESTS SECTION ═══════════════ -->
-<section id="interests">
-  <h2>Topics of Interest</h2>
-  <p>Areas I actively explore, read about, and experiment with.</p>
+<section id="interests" class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">Topics of Interest</h2>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <div class="skill-icon"><i class="fas fa-brain"></i></div>
+        <h3>NLP & LLMs</h3>
+        <div class="skill-items">
+          <span class="skill-tag">BERT</span>
+          <span class="skill-tag">Arabic NLP</span>
+          <span class="skill-tag">Prompting</span>
+        </div>
+      </div>
 
-  <div class="interests-grid">
+      <div class="skill-category">
+        <div class="skill-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>Federated Learning</h3>
+        <div class="skill-items">
+          <span class="skill-tag">FedAvg</span>
+          <span class="skill-tag">FedProx</span>
+          <span class="skill-tag">Privacy</span>
+        </div>
+      </div>
 
-    <div class="interest-item">
-      <span class="interest-icon">🧠</span>
-      <h4>NLP & Large Language Models</h4>
-      <p>BERT-family models, Arabic/dialect NLP, low-resource language adaptation, prompt engineering.</p>
+      <div class="skill-category">
+        <div class="skill-icon"><i class="fas fa-cloud"></i></div>
+        <h3>Cloud & MLOps</h3>
+        <div class="skill-items">
+          <span class="skill-tag">AWS</span>
+          <span class="skill-tag">Azure</span>
+          <span class="skill-tag">CI/CD</span>
+        </div>
+      </div>
     </div>
-
-    <div class="interest-item">
-      <span class="interest-icon">🔐</span>
-      <h4>Federated & Privacy-Preserving ML</h4>
-      <p>FedAvg, FedProx, differential privacy, secure aggregation, semi-supervised federated learning.</p>
-    </div>
-
-    <div class="interest-item">
-      <span class="interest-icon">☁️</span>
-      <h4>Cloud Architecture & DevOps</h4>
-      <p>AWS, Azure, Kubernetes, Infrastructure as Code, CI/CD pipelines, zero-trust security.</p>
-    </div>
-
-    <div class="interest-item">
-      <span class="interest-icon">📊</span>
-      <h4>Data Engineering & MLOps</h4>
-      <p>Model deployment pipelines, experiment tracking, monitoring, scalable data systems.</p>
-    </div>
-    <div class="interest-item">
-      <span class="interest-icon">🤖</span>
-      <h4>Autonomous & Intelligent Systems</h4>
-      <p>Sentiment analysis, classification systems, real-time AI pipelines, decision automation.</p>
-    </div>
-
   </div>
 </section>
     
