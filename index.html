@@ -838,8 +838,8 @@
   <!-- mobile drawer -->
   <nav class="nav-drawer" id="navDrawer" aria-label="Mobile navigation" aria-hidden="true">
     <a href="#hero"     class="nav-link" data-drawer>Home</a>
-    <a href="#projects" class="nav-link" data-drawer>Projects</a>
     <a href="#research" class="nav-link" data-drawer>Research</a>
+    <a href="#projects" class="nav-link" data-drawer>Projects</a>
     <a href="#skills"   class="nav-link" data-drawer>Skills</a>
     <a href="#about"    class="nav-link" data-drawer>About</a>
     <a href="#contact"  class="nav-link" data-drawer>Contact</a>
@@ -954,9 +954,11 @@
         </header>
 
         <div class="projects-grid">
+          
 
           <!-- R1: DziriBERT (featured) -->
-          <article class="card proj-card proj-featured reveal" aria-label="Research: Federated Fine-Tuning of DziriBERT">
+          <!-- <article class="card proj-card proj-featured reveal" aria-label="Research: Federated Fine-Tuning of DziriBERT"> -->
+	  <article class="card proj-card reveal" aria-label="Research: Federated Fine-Tuning of DziriBERT">
             <div class="card-pad">
               <div class="proj-top">
                 <div class="proj-top-left">
@@ -965,7 +967,7 @@
                   </div>
                   <div>
                     <h3 class="proj-title">Federated Fine-Tuning of DziriBERT</h3>
-                    <span class="badge badge-green">Research · 2026</span>
+                    <span class="badge badge-green">AIDAM26 · 2026</span>
                   </div>
                 </div>
               </div>
@@ -991,19 +993,65 @@
             </div>
           </article>
 
-          <!-- R2: Upcoming -->
-          <article class="card proj-card reveal" aria-label="Upcoming research project">
-            <div class="card-pad" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:260px;gap:.85rem;">
-              <div class="icon-box" style="background:var(--c-surface);box-shadow:none;border:1px solid var(--c-border);">
-                <i class="fas fa-hourglass-half" aria-hidden="true" style="color:var(--c-text-3);"></i>
+          <!-- R2: Automated Privacy-Preserving FL -->
+          <article class="card proj-card reveal" aria-label="Research: Automated Privacy-Preserving Federated Learning for IoT Intrusion Detection">
+            <div class="card-pad">
+              <div class="proj-top">
+                <div class="proj-top-left">
+                  <div class="icon-box" style="background:linear-gradient(135deg,#22d3ee,#6c63ff);">
+                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                  </div>
+                  <div>
+                    <h3 class="proj-title">Automated Privacy-Preserving FL for IoT Intrusion Detection</h3>
+                    <span class="badge badge-cyan">PAIS26 · 2026</span>
+                  </div>
+                </div>
               </div>
-              <h3 class="h-card" style="color:var(--c-text-3);">Next Paper</h3>
-              <p class="body-sm" style="max-width:24ch;">Currently in progress. Check back soon.</p>
-              <span class="badge badge-cyan">In Progress</span>
+          
+              <p class="proj-desc">
+                Interactive research presentation on a privacy-preserving federated learning pipeline for IoT
+                intrusion detection. The work focuses on automated deployment, non-IID robustness, low-bandwidth
+                communication, and near-centralized performance without exposing raw device data.
+              </p>
+          
+              <div class="tag-row">
+                <span class="tag">Federated Learning</span>
+                <span class="tag">IoT Security</span>
+                <span class="tag">Privacy-preserving ML</span>
+                <span class="tag">Intrusion Detection</span>
+                <span class="tag">PAIS26</span>
+              </div>
+          
+              <div class="proj-results">
+                <div class="proj-result-item">Near-centralized detection performance with privacy-preserving training</div>
+                <div class="proj-result-item">Automated pipeline reduces manual FL setup and deployment effort</div>
+                <div class="proj-result-item">Very low communication overhead using parameter exchange only</div>
+                <div class="proj-result-item">Doctor-friendly interactive research page optimized for desktop and mobile</div>
+              </div>
+          
+              <a href="ResearchAuto-FL/index.html" class="research-link-btn">
+                View Paper &amp; Results <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+          
+          
             </div>
           </article>
 
+            <!-- R3: Upcoming -->
+            <article class="card proj-card reveal" aria-label="Upcoming research project">
+              <div class="card-pad" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:260px;gap:.85rem;">
+                <div class="icon-box" style="background:var(--c-surface);box-shadow:none;border:1px solid var(--c-border);">
+                  <i class="fas fa-hourglass-half" aria-hidden="true" style="color:var(--c-text-3);"></i>
+                </div>
+                <h3 class="h-card" style="color:var(--c-text-3);">Next Paper</h3>
+                <p class="body-sm" style="max-width:24ch;">Currently in progress. Check back soon.</p>
+                <span class="badge badge-cyan">In Progress</span>
+              </div>
+            </article>
+
+          
         </div>
+        
       </div>
     </section>
 
