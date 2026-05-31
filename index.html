@@ -890,10 +890,15 @@
           </div>
 
           <div class="hero-actions">
-            <a href="mailto:slimanin.dev@gmail.com" class="btn btn-primary">
+            <a href="mailto:slimanin.dev@gmail.com" class="btn btn-primary"
+				   onclick="gtag('event', 'contact_click', {method: 'email',location: 'hero'})">
+				
               <i class="fas fa-paper-plane" aria-hidden="true"></i> Email Me
             </a>
-            <a href="#projects" class="btn btn-ghost">
+            <a href="#projects" class="btn btn-ghost" onclick="gtag('event', 'section_navigation', {
+     target_section: 'projects',
+     location: 'hero'
+   })">
               View Projects <i class="fas fa-arrow-right" aria-hidden="true"></i>
             </a>
           </div>
@@ -1452,10 +1457,16 @@
               </address>
 
               <div class="contact-ctas">
-                <a href="mailto:slimanin.dev@gmail.com" class="btn btn-primary">
+                <a href="mailto:slimanin.dev@gmail.com" class="btn btn-primary"   onclick="gtag('event', 'contact_click', {
+     method: 'email',
+     location: 'contact_section'
+   })">
                   <i class="fas fa-envelope" aria-hidden="true"></i> Email Me
                 </a>
-                <a href="https://t.me/s_noah" target="_blank" rel="noreferrer noopener" class="btn btn-ghost">
+                <a href="https://t.me/s_noah" target="_blank" rel="noreferrer noopener" class="btn btn-ghost" onclick="gtag('event', 'contact_click', {
+     method: 'telegram',
+     location: 'contact_section'
+   })">
                   <i class="fab fa-telegram" aria-hidden="true"></i> Telegram
                 </a>
               </div>
