@@ -815,26 +815,35 @@
   <!-- ─── NAVBAR ──────────────────────────── -->
   <header class="site-nav" id="siteNav" role="banner">
     <nav class="wrap nav-inner" aria-label="Primary navigation">
-      <a href="#hero" class="nav-brand" aria-label="N Slimani — home">
+      <a href="#hero" class="nav-brand" aria-label="N Slimani — home"
+         onclick="gtag('event', 'nav_click', {link_text: 'brand', destination: 'hero'})">
         <img src="avatar.png" alt="" class="nav-avatar" width="40" height="40" aria-hidden="true" />
         <span class="nav-name">N Slimani</span>
       </a>
 
       <ul class="nav-links" role="list">
-        <li><a href="#hero"     class="nav-link" aria-current="page">Home</a></li>
-        <li><a href="#research" class="nav-link">Research</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#skills"   class="nav-link">Skills</a></li>
-        <li><a href="#about"    class="nav-link">About</a></li>
-        <li><a href="#contact"  class="nav-link">Contact</a></li>
+        <li><a href="#hero"     class="nav-link" aria-current="page"
+               onclick="gtag('event', 'nav_click', {link_text: 'Home', destination: 'hero'})">Home</a></li>
+        <li><a href="#research" class="nav-link"
+               onclick="gtag('event', 'nav_click', {link_text: 'Research', destination: 'research'})">Research</a></li>
+        <li><a href="#projects" class="nav-link"
+               onclick="gtag('event', 'nav_click', {link_text: 'Projects', destination: 'projects'})">Projects</a></li>
+        <li><a href="#skills"   class="nav-link"
+               onclick="gtag('event', 'nav_click', {link_text: 'Skills', destination: 'skills'})">Skills</a></li>
+        <li><a href="#about"    class="nav-link"
+               onclick="gtag('event', 'nav_click', {link_text: 'About', destination: 'about'})">About</a></li>
+        <li><a href="#contact"  class="nav-link"
+               onclick="gtag('event', 'nav_click', {link_text: 'Contact', destination: 'contact'})">Contact</a></li>
       </ul>
 
       <div class="nav-right">
-        <button class="theme-toggle" id="themeToggle" aria-label="Switch colour theme">
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch colour theme"
+                onclick="gtag('event', 'theme_toggle', {action: 'toggle'})">
           <i class="fas fa-sun  icon-sun"  aria-hidden="true"></i>
           <i class="fas fa-moon icon-moon" aria-hidden="true"></i>
         </button>
-        <a href="#contact" class="btn btn-primary" style="min-height:38px;padding:0 1rem;font-size:.88rem;">
+        <a href="#contact" class="btn btn-primary" style="min-height:38px;padding:0 1rem;font-size:.88rem;"
+           onclick="gtag('event', 'cta_click', {link_text: 'Reach Me', location: 'navbar'})">
           Reach Me
         </a>
         <button class="hamburger" id="ham" aria-expanded="false" aria-controls="navDrawer" aria-label="Toggle navigation">
@@ -846,13 +855,20 @@
 
   <!-- mobile drawer -->
   <nav class="nav-drawer" id="navDrawer" aria-label="Mobile navigation" aria-hidden="true">
-    <a href="#hero"     class="nav-link" data-drawer>Home</a>
-    <a href="#research" class="nav-link" data-drawer>Research</a>
-    <a href="#projects" class="nav-link" data-drawer>Projects</a>
-    <a href="#skills"   class="nav-link" data-drawer>Skills</a>
-    <a href="#about"    class="nav-link" data-drawer>About</a>
-    <a href="#contact"  class="nav-link" data-drawer>Contact</a>
-    <a href="#contact"  class="btn btn-primary" data-drawer style="margin-top:.5rem;">Reach Me</a>
+    <a href="#hero"     class="nav-link" data-drawer
+       onclick="gtag('event', 'nav_click', {link_text: 'Home', destination: 'hero', location: 'drawer'})">Home</a>
+    <a href="#research" class="nav-link" data-drawer
+       onclick="gtag('event', 'nav_click', {link_text: 'Research', destination: 'research', location: 'drawer'})">Research</a>
+    <a href="#projects" class="nav-link" data-drawer
+       onclick="gtag('event', 'nav_click', {link_text: 'Projects', destination: 'projects', location: 'drawer'})">Projects</a>
+    <a href="#skills"   class="nav-link" data-drawer
+       onclick="gtag('event', 'nav_click', {link_text: 'Skills', destination: 'skills', location: 'drawer'})">Skills</a>
+    <a href="#about"    class="nav-link" data-drawer
+       onclick="gtag('event', 'nav_click', {link_text: 'About', destination: 'about', location: 'drawer'})">About</a>
+    <a href="#contact"  class="nav-link" data-drawer
+       onclick="gtag('event', 'nav_click', {link_text: 'Contact', destination: 'contact', location: 'drawer'})">Contact</a>
+    <a href="#contact"  class="btn btn-primary" data-drawer style="margin-top:.5rem;"
+       onclick="gtag('event', 'cta_click', {link_text: 'Reach Me', location: 'drawer'})">Reach Me</a>
   </nav>
 
   <main id="main" tabindex="-1">
@@ -904,19 +920,24 @@
           </div>
 
           <div class="hero-socials" aria-label="Social profiles">
-            <a href="https://linkedin.com/in/NASREDDINESLIMANI" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn" class="btn-icon btn btn-ghost">
+            <a href="https://linkedin.com/in/NASREDDINESLIMANI" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn" class="btn-icon btn btn-ghost"
+               onclick="gtag('event', 'social_click', {platform: 'linkedin', location: 'hero'})">
               <i class="fab fa-linkedin" aria-hidden="true"></i>
             </a>
-            <a href="https://github.com/noahswitch" target="_blank" rel="noreferrer noopener" aria-label="GitHub" class="btn-icon btn btn-ghost">
+            <a href="https://github.com/noahswitch" target="_blank" rel="noreferrer noopener" aria-label="GitHub" class="btn-icon btn btn-ghost"
+               onclick="gtag('event', 'social_click', {platform: 'github', location: 'hero'})">
               <i class="fab fa-github" aria-hidden="true"></i>
             </a>
-            <a href="https://www.researchgate.net/profile/Nasreddine-Slimani" target="_blank" rel="noreferrer noopener" aria-label="ResearchGate" class="btn-icon btn btn-ghost">
+            <a href="https://www.researchgate.net/profile/Nasreddine-Slimani" target="_blank" rel="noreferrer noopener" aria-label="ResearchGate" class="btn-icon btn btn-ghost"
+               onclick="gtag('event', 'social_click', {platform: 'researchgate', location: 'hero'})">
               <i class="fab fa-researchgate" aria-hidden="true"></i>
             </a>
-            <a href="https://t.me/s_noah" target="_blank" rel="noreferrer noopener" aria-label="Telegram" class="btn-icon btn btn-ghost">
+            <a href="https://t.me/s_noah" target="_blank" rel="noreferrer noopener" aria-label="Telegram" class="btn-icon btn btn-ghost"
+               onclick="gtag('event', 'social_click', {platform: 'telegram', location: 'hero'})">
               <i class="fab fa-telegram" aria-hidden="true"></i>
             </a>
-            <a href="https://nslimani.blogspot.com/" target="_blank" rel="noreferrer noopener" aria-label="Blog" class="btn-icon btn btn-ghost">
+            <a href="https://nslimani.blogspot.com/" target="_blank" rel="noreferrer noopener" aria-label="Blog" class="btn-icon btn btn-ghost"
+               onclick="gtag('event', 'social_click', {platform: 'blog', location: 'hero'})">
               <i class="fas fa-blog" aria-hidden="true"></i>
             </a>
           </div>
@@ -1001,7 +1022,8 @@
                 <div class="proj-result-item">SSFL reduced labeling requirements while maintaining performance</div>
                 <div class="proj-result-item">DistilBERT offered a lighter alternative with competitive results</div>
               </div>
-              <a href="research-dziribert/index.html" class="research-link-btn">
+              <a href="research-dziribert/index.html" class="research-link-btn"
+                 onclick="gtag('event', 'research_link_click', {paper: 'DziriBERT', location: 'research_section'})">
                 View Paper &amp; Results <i class="fas fa-arrow-right" aria-hidden="true"></i>
               </a>
             </div>
@@ -1042,7 +1064,8 @@
                 <div class="proj-result-item">Very low communication overhead using parameter exchange only</div>
               </div>
           
-              <a href="ResearchAuto-FL/index.html" class="research-link-btn">
+              <a href="ResearchAuto-FL/index.html" class="research-link-btn"
+               onclick="gtag('event', 'research_link_click', {paper: 'Auto-FL-IoT', location: 'research_section'})">
                 View Paper &amp; Results <i class="fas fa-arrow-right" aria-hidden="true"></i>
               </a>
           
@@ -1475,16 +1498,20 @@
             <div>
               <p class="h-card" style="margin-bottom:1rem;color:var(--c-text-2);">Also find me on</p>
               <div class="social-grid">
-                <a href="https://linkedin.com/in/NASREDDINESLIMANI" target="_blank" rel="noreferrer noopener" class="social-card">
+                <a href="https://linkedin.com/in/NASREDDINESLIMANI" target="_blank" rel="noreferrer noopener" class="social-card"
+                   onclick="gtag('event', 'social_click', {platform: 'linkedin', location: 'contact_section'})">
                   <i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn
                 </a>
-                <a href="https://github.com/noahswitch" target="_blank" rel="noreferrer noopener" class="social-card">
+                <a href="https://github.com/noahswitch" target="_blank" rel="noreferrer noopener" class="social-card"
+                   onclick="gtag('event', 'social_click', {platform: 'github', location: 'contact_section'})">
                   <i class="fab fa-github" aria-hidden="true"></i> GitHub
                 </a>
-                <a href="https://www.researchgate.net/profile/Nasreddine-Slimani" target="_blank" rel="noreferrer noopener" class="social-card">
+                <a href="https://www.researchgate.net/profile/Nasreddine-Slimani" target="_blank" rel="noreferrer noopener" class="social-card"
+                   onclick="gtag('event', 'social_click', {platform: 'researchgate', location: 'contact_section'})">
                   <i class="fab fa-researchgate" aria-hidden="true"></i> ResearchGate
                 </a>
-                <a href="https://nslimani.blogspot.com/" target="_blank" rel="noreferrer noopener" class="social-card">
+                <a href="https://nslimani.blogspot.com/" target="_blank" rel="noreferrer noopener" class="social-card"
+                   onclick="gtag('event', 'social_click', {platform: 'blog', location: 'contact_section'})">
                   <i class="fas fa-blog" aria-hidden="true"></i> Blog
                 </a>
               </div>
@@ -1505,7 +1532,8 @@
     </div>
   </footer>
 
-  <button id="btt" aria-label="Back to top">
+  <button id="btt" aria-label="Back to top"
+          onclick="gtag('event', 'back_to_top', {location: 'fixed_button'})">
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
   </button>
 
