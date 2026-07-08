@@ -18,7 +18,7 @@ export function Research() {
           description="Published and ongoing ML research with a focus on federated learning, privacy-preserving NLP, and low-resource language modelling."
         />
 
-        <div className="mt-14 space-y-6">
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {research.map((paper) => (
             <ResearchCard
               key={paper.id}
@@ -37,8 +37,8 @@ export function Research() {
             />
           ))}
 
-          <Reveal>
-            <div className="glass flex flex-col items-center justify-center gap-3 rounded-3xl px-7 py-14 text-center">
+          <Reveal className="h-full">
+            <div className="glass flex h-full flex-col items-center justify-center gap-3 rounded-3xl px-7 py-14 text-center">
               <Hourglass size={22} className="text-mist-2" />
               <h3 className="font-display text-lg font-medium text-mist">Next paper</h3>
               <p className="max-w-xs text-sm text-mist-2">Currently in progress. Check back soon.</p>

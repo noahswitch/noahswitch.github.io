@@ -15,7 +15,7 @@ export function Projects() {
           description="Engineering projects spanning infrastructure automation, machine learning applications, and cloud architecture."
         />
 
-        <div className="mt-16 space-y-24">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, i) => (
             <ProjectCase key={project.id} project={project} index={i} />
           ))}
