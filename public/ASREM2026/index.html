@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XAI-IDS: Explainable Intrusion Detection for IoT-Enabled Smart Energy Infrastructure</title>
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#0f1730; --card:#121a36; --text:#e8edf9; --muted:#9aa6c3;
+    --accent:#4f8cff; --accent2:#7ee0c1; --border:#23315c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(160deg,var(--bg),var(--bg2) 60%); color:var(--text); line-height:1.6;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px;}
+  header.hero{padding:64px 0 40px;border-bottom:1px solid var(--border);}
+  .tag{display:inline-block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);
+       background:rgba(126,224,193,.08);border:1px solid rgba(126,224,193,.25);padding:5px 12px;border-radius:999px;margin-bottom:18px;}
+  h1{font-size:clamp(26px,4vw,38px);line-height:1.25;margin:0 0 14px;}
+  .authors{color:var(--muted);font-size:15px;margin-bottom:6px;}
+  .venue{color:var(--accent2);font-size:14px;font-weight:600;}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;font-weight:600;
+       font-size:14px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease;}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 24px -8px rgba(79,140,255,.6);}
+  .btn-secondary{background:rgba(255,255,255,.04);color:var(--text);border:1px solid var(--border);}
+  .btn:hover{transform:translateY(-2px);}
+  section{padding:48px 0;border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+  h2{font-size:20px;color:var(--accent2);text-transform:uppercase;letter-spacing:.05em;margin:0 0 18px;}
+  p{color:#cfd6ea;margin:0 0 14px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;}
+  .card .num{font-size:28px;font-weight:700;color:var(--accent);}
+  .card .lbl{font-size:13px;color:var(--muted);margin-top:4px;}
+  .contrib{padding-left:0;list-style:none;margin:0;display:grid;gap:14px;}
+  .contrib li{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;display:flex;gap:14px;}
+  .contrib .idx{flex-shrink:0;width:30px;height:30px;border-radius:8px;background:rgba(79,140,255,.15);
+                color:var(--accent2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px;}
+  .gallery figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .gallery img{width:100%;display:block;}
+  .gallery figcaption{font-size:13px;color:var(--muted);padding:10px 14px;}
+  .keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .kw{font-size:12.5px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:#c7cfe8;
+      padding:5px 12px;border-radius:999px;}
+  footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:13px;}
+  a{color:var(--accent2);}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;}
+  th{color:var(--accent2);font-weight:600;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="tag">Conference Paper · ASREM 2026</span>
+    <h1>XAI-IDS: An Explainable Intrusion Detection Framework for IoT-Enabled Smart Energy Infrastructure</h1>
+    <p class="authors">Mostefa Bendjima<sup>1</sup>, Nasreddine Slimani<sup>2</sup></p>
+    <p class="venue">¹ University of Bechar, Algeria &nbsp;·&nbsp; ² University of Continuing Education, Algiers, Algeria</p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://drive.google.com/file/d/1o46qeXfXJKDz71Fui5h5hWdt7AAv771o/view?usp=sharing" target="_blank" rel="noopener">
+        📄 Read Full Paper (PDF)
+      </a>
+      <a class="btn btn-secondary" href="https://drive.google.com/file/d/1Bb0yylS1frzp_ffRUosD1xnXFIPro1ik/view?usp=sharing" target="_blank" rel="noopener">
+        🏆 View Certificate
+      </a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Abstract</h2>
+    <p>
+      The digitalization of energy infrastructure exposes resource-constrained IoT field devices —
+      smart meters, renewable energy sensors, and building automation nodes — to escalating network
+      intrusion threats, making lightweight and interpretable detection a critical operational requirement.
+      This work presents <strong>XAI-IDS</strong>, a framework combining Random Forest, XGBoost, and LightGBM
+      with SHAP TreeExplainer to deliver global, local, and per-class feature-level explanations on the
+      RT-IoT2022 benchmark.
+    </p>
+    <p>
+      All three models achieve macro F1 above 0.98; McNemar's test confirms that pairwise accuracy
+      differences are statistically non-significant (p &gt; 0.05), shifting the primary deployment concern
+      to computational cost rather than predictive performance. A four-feature SHAP consensus — forward
+      payload minimum, destination port, average forward payload, and packet rate — maps directly onto the
+      flow statistics that deviate under attacks targeting IoT protocols such as MQTT. SHAP-guided feature
+      selection reduces input dimensionality by <strong>88%</strong> with a macro F1 loss below 0.007,
+      supporting deployment on constrained IoT edge gateways.
+    </p>
+    <div class="keywords">
+      <span class="kw">Intrusion Detection</span><span class="kw">IoT Security</span>
+      <span class="kw">Smart Energy</span><span class="kw">Explainable AI</span>
+      <span class="kw">SHAP</span><span class="kw">XGBoost</span><span class="kw">LightGBM</span>
+      <span class="kw">Edge Computing</span><span class="kw">Feature Selection</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key Results</h2>
+    <div class="grid">
+      <div class="card"><div class="num">0.9944</div><div class="lbl">Best Macro F1 (XGBoost)</div></div>
+      <div class="card"><div class="num">1.000</div><div class="lbl">ROC-AUC (XGBoost, OvR)</div></div>
+      <div class="card"><div class="num">88%</div><div class="lbl">Dimensionality reduction (81 → 10 features)</div></div>
+      <div class="card"><div class="num">1.97 ms</div><div class="lbl">LightGBM inference latency / sample</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Core Contributions</h2>
+    <ul class="contrib">
+      <li><span class="idx">1</span>
+        <span>A multi-model SHAP analysis across RF, XGBoost, and LightGBM on RT-IoT2022, comprising global
+        importance rankings, local per-prediction explanations, per-class feature decompositions, and a
+        cross-model consistency study.</span>
+      </li>
+      <li><span class="idx">2</span>
+        <span>A SHAP-guided progressive feature selection study demonstrating that a 10-feature LightGBM
+        model retains macro F1 within 0.007 of the full-feature baseline at 88% dimensionality reduction.</span>
+      </li>
+      <li><span class="idx">3</span>
+        <span>A paired statistical analysis (McNemar's test) and computational profiling that together provide
+        a data-driven basis for deployment decisions on resource-constrained IoT edge hardware.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Performance Summary</h2>
+    <table>
+      <tr><th>Model</th><th>Accuracy</th><th>Precision (Macro)</th><th>Recall (Macro)</th><th>F1 (Macro)</th><th>ROC-AUC</th></tr>
+      <tr><td>Random Forest</td><td>0.9983</td><td>0.9717</td><td>0.9936</td><td>0.9815</td><td>0.9999</td></tr>
+      <tr><td>XGBoost</td><td>0.9984</td><td>0.9946</td><td>0.9943</td><td>0.9944</td><td>1.0000</td></tr>
+      <tr><td>LightGBM</td><td>0.9987</td><td>0.9870</td><td>0.9952</td><td>0.9908</td><td>0.9999</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Selected Figures</h2>
+    <div class="gallery">
+      <figure>
+        <img src="assets/xai-ids/03_model_comparison_bar.png" alt="Model performance comparison" onerror="this.parentElement.style.display='none'">
+        <figcaption>Model performance comparison (Accuracy, Precision, Recall, F1, ROC-AUC)</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/xai-ids/07_shap_summary_xgboost.png" alt="SHAP summary plot" onerror="this.parentElement.style.display='none'">
+        <figcaption>SHAP beeswarm plot — XGBoost global feature importance</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/xai-ids/14_shap_feature_selection.png" alt="SHAP-guided feature selection" onerror="this.parentElement.style.display='none'">
+        <figcaption>SHAP-guided feature reduction for edge-deployable IDS</figcaption>
+      </figure>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>© 2026 Mostefa Bendjima &amp; Nasreddine Slimani — XAI-IDS, ASREM 2026</p>
+  </footer>
+</div>
+
+</body>
+</html>

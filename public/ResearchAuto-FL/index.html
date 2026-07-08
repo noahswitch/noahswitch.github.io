@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Automated Privacy-Preserving FL for IoT Intrusion Detection</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<style>
+:root {
+--bg-color: #f0f9ff;
+--text-color: #0c4a6e;
+--card-bg: rgba(255, 255, 255, 0.7);
+--card-border: rgba(255, 255, 255, 0.5);
+--card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+--gradient-start: #0284c7;
+--gradient-end: #0369a1;
+--highlight-bg: #e0f2fe;
+--footer-bg: #082f49;
+--footer-text: #7dd3fc;
+--muted-text: #0369a1;
+--button-bg: #0284c7;
+--button-text: #ffffff;
+--button-hover: #0369a1;
+}
+
+[data-theme="dark"] {
+--bg-color: #0f172a;
+--text-color: #f1f5f9;
+--card-bg: rgba(30, 41, 59, 0.7);
+--card-border: rgba(255, 255, 255, 0.1);
+--card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+--gradient-start: #38bdf8;
+--gradient-end: #7dd3fc;
+--highlight-bg: #1e293b;
+--footer-bg: #020617;
+--footer-text: #94a3b8;
+--muted-text: #94a3b8;
+--button-bg: #0ea5e9;
+--button-text: #ffffff;
+--button-hover: #0284c7;
+}
+
+body {
+font-family: 'Inter', sans-serif;
+background-color: var(--bg-color);
+color: var(--text-color);
+transition: background-color 0.3s ease, color 0.3s ease;
+-webkit-tap-highlight-color: transparent;
+}
+
+.slide-section {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 4rem 1.5rem;
+opacity: 0;
+transform: translateY(20px);
+transition: all 0.8s ease-out;
+}
+
+@media (max-width: 768px) {
+.slide-section {
+padding: 3rem 1rem;
+min-height: auto;
+}
+}
+
+.slide-section.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+.glass-card {
+background: var(--card-bg);
+backdrop-filter: blur(10px);
+border: 1px solid var(--card-border);
+box-shadow: var(--card-shadow);
+transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.gradient-text {
+background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+transition: background 0.3s ease;
+}
+
+.text-dynamic {
+color: var(--text-color);
+}
+
+.text-muted-dynamic {
+color: var(--muted-text);
+}
+
+.bg-highlight {
+background-color: var(--highlight-bg);
+}
+
+#theme-toggle {
+position: absolute;
+top: 1.5rem;
+right: 1.5rem;
+z-index: 100;
+background: var(--card-bg);
+border: 1px solid var(--card-border);
+color: var(--text-color);
+padding: 0.5rem;
+border-radius: 9999px;
+cursor: pointer;
+transition: all 0.3s ease;
+backdrop-filter: blur(10px);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+#theme-toggle:hover {
+transform: scale(1.1);
+}
+
+.dark-icon { display: none; }
+[data-theme="dark"] .dark-icon { display: block; }
+[data-theme="dark"] .light-icon { display: none; }
+
+.metric-box {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 1.5rem;
+border-radius: 1rem;
+flex: 1;
+text-align: center;
+}
+
+.metric-box-centralized {
+background-color: rgba(239, 68, 68, 0.1);
+border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+[data-theme="dark"] .metric-box-centralized {
+background-color: rgba(239, 68, 68, 0.15);
+}
+
+.metric-box-federated {
+background-color: rgba(14, 165, 233, 0.1);
+border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+[data-theme="dark"] .metric-box-federated {
+background-color: rgba(14, 165, 233, 0.15);
+}
+</style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+<button id="theme-toggle" aria-label="Toggle Dark Mode">
+<svg class="light-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+<svg class="dark-icon w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+</button>
+
+<div class="hidden md:flex fixed right-4 top-1/2 transform -translate-y-1/2 flex-col gap-3 z-50">
+<a href="#hero" class="w-3 h-3 rounded-full bg-sky-300 hover:bg-sky-600 transition-colors nav-dot" data-target="hero"></a>
+<a href="#overview" class="w-3 h-3 rounded-full bg-sky-300 hover:bg-sky-600 transition-colors nav-dot" data-target="overview"></a>
+<a href="#problem" class="w-3 h-3 rounded-full bg-sky-300 hover:bg-sky-600 transition-colors nav-dot" data-target="problem"></a>
+<a href="#methodology" class="w-3 h-3 rounded-full bg-sky-300 hover:bg-sky-600 transition-colors nav-dot" data-target="methodology"></a>
+<a href="#results" class="w-3 h-3 rounded-full bg-sky-300 hover:bg-sky-600 transition-colors nav-dot" data-target="results"></a>
+<a href="#efficiency" class="w-3 h-3 rounded-full bg-sky-300 hover:bg-sky-600 transition-colors nav-dot" data-target="efficiency"></a>
+<a href="#insights" class="w-3 h-3 rounded-full bg-sky-300 hover:bg-sky-600 transition-colors nav-dot" data-target="insights"></a>
+<a href="#conclusion" class="w-3 h-3 rounded-full bg-sky-300 hover:bg-sky-600 transition-colors nav-dot" data-target="conclusion"></a>
+</div>
+
+<section id="hero" class="slide-section visible relative overflow-hidden" style="min-height: 100vh;">
+<div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+<div class="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-sky-400 blur-3xl opacity-20 animate-pulse"></div>
+<div class="absolute top-[60%] -left-[10%] w-[40%] h-[40%] rounded-full bg-sky-500 blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+</div>
+<div class="max-w-5xl mx-auto text-center z-10 px-4">
+<a href="https://pais.cu-aflou.edu.dz/" target="_blank" rel="noopener noreferrer" class="inline-block py-1.5 px-4 rounded-full bg-highlight text-muted-dynamic text-sm font-bold tracking-wide mb-6 uppercase border border-[var(--card-border)] hover:scale-105 transition-transform">PAIS26 Conference Presentation</a>
+<h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight gradient-text px-2">
+Automated Privacy-Preserving<br class="hidden md:block">Federated Learning
+</h1>
+<p class="text-xl md:text-2xl font-light text-muted-dynamic mb-10 max-w-3xl mx-auto">For IoT Intrusion Detection</p>
+
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 text-dynamic font-medium mb-12">
+<div class="flex flex-col items-center">
+<span class="text-lg md:text-xl">Nasreddine Slimani</span>
+
+</div>
+<div class="hidden sm:block w-px h-10 bg-sky-300/50"></div>
+<div class="flex flex-col items-center">
+<span class="text-lg md:text-xl">Dr. Mostefa Bendjima</span>
+<span class="text-sm font-normal opacity-80">University of Bechar</span>
+</div>
+</div>
+
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<a href="#overview" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 text-white bg-[var(--button-bg)] hover:bg-[var(--button-hover)] px-8 py-3 rounded-xl transition-colors font-semibold text-lg shadow-lg">
+Explore Research
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+<path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+</svg>
+</a>
+</div>
+</div>
+</section>
+
+<section id="overview" class="slide-section max-w-6xl mx-auto">
+<h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center text-dynamic">Abstract & Key Contributions</h2>
+<div class="grid md:grid-cols-12 gap-8 md:gap-12 items-start">
+<div class="md:col-span-7">
+<div class="glass-card p-6 md:p-8 rounded-2xl mb-6">
+<h3 class="text-xl font-bold mb-3 text-dynamic">Core Concept</h3>
+<p class="text-base md:text-lg text-muted-dynamic leading-relaxed">
+Traditional centralized ML requires sharing raw IoT traffic data, violating privacy and compliance requirements. This work presents a fully automated federated learning pipeline where IoT devices train locally and share only model parameters.
+</p>
+<p class="text-base md:text-lg text-muted-dynamic leading-relaxed mt-4">
+The system requires <strong>zero expert configuration</strong>, reducing deployment from 8+ hours to <strong>under 1 hour</strong>.
+</p>
+</div>
+<div class="glass-card p-6 md:p-8 rounded-2xl">
+<h3 class="text-xl font-bold mb-3 text-dynamic">Why It Matters</h3>
+<p class="text-base md:text-lg text-muted-dynamic leading-relaxed">
+The platform preserves privacy, supports extreme non-IID distributions, and maintains near-centralized performance for Mirai botnet detection, making it practical for healthcare-adjacent and security-sensitive environments where data confidentiality matters.
+</p>
+</div>
+</div>
+<div class="md:col-span-5 grid grid-cols-2 gap-4">
+<div class="glass-card p-5 rounded-2xl text-center border-t-4 border-t-sky-500">
+<div class="text-3xl md:text-4xl font-black text-sky-500 mb-1">99.91%</div>
+<div class="text-xs font-semibold text-muted-dynamic uppercase tracking-wide">Accuracy</div>
+</div>
+<div class="glass-card p-5 rounded-2xl text-center border-t-4 border-t-sky-500">
+<div class="text-3xl md:text-4xl font-black text-sky-500 mb-1">&lt; 1 hr</div>
+<div class="text-xs font-semibold text-muted-dynamic uppercase tracking-wide">Setup Time</div>
+</div>
+<div class="glass-card p-5 rounded-2xl text-center border-t-4 border-t-sky-500">
+<div class="text-3xl md:text-4xl font-black text-sky-500 mb-1">99.98%</div>
+<div class="text-xs font-semibold text-muted-dynamic uppercase tracking-wide">Comm. Savings</div>
+</div>
+<div class="glass-card p-5 rounded-2xl text-center border-t-4 border-t-sky-500">
+<div class="text-3xl md:text-4xl font-black text-sky-500 mb-1">0.004%</div>
+<div class="text-xs font-semibold text-muted-dynamic uppercase tracking-wide">False Positives</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="problem" class="slide-section">
+<div class="max-w-6xl mx-auto w-full">
+<h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center text-dynamic">Problem & Motivation</h2>
+<div class="grid md:grid-cols-3 gap-6 md:gap-8">
+<div class="glass-card p-6 md:p-8 rounded-2xl">
+<div class="w-12 h-12 bg-highlight rounded-lg flex items-center justify-center mb-5 text-2xl">📊</div>
+<h3 class="text-xl font-bold mb-3 text-dynamic">Severe Non-IID Data</h3>
+<p class="text-muted-dynamic">IoT deployments create extreme heterogeneity. Some devices see mostly attack traffic while others observe benign traffic. Standard federated learning often degrades under these conditions.</p>
+</div>
+<div class="glass-card p-6 md:p-8 rounded-2xl">
+<div class="w-12 h-12 bg-highlight rounded-lg flex items-center justify-center mb-5 text-2xl">⚠️</div>
+<h3 class="text-xl font-bold mb-3 text-dynamic">Single-Class Clients</h3>
+<p class="text-muted-dynamic">Clients with 100% single-class labels can break traditional local learning. This is a realistic edge case for IoT devices and was not handled by prior FL-IDS approaches.</p>
+</div>
+<div class="glass-card p-6 md:p-8 rounded-2xl border-l-4 border-l-red-500">
+<div class="w-12 h-12 bg-highlight rounded-lg flex items-center justify-center mb-5 text-2xl">⏱️</div>
+<h3 class="text-xl font-bold mb-3 text-dynamic">Manual Configuration Burden</h3>
+<p class="text-muted-dynamic">Typical FL workflows require expert configuration for partitioning, tuning, orchestration, and evaluation, often taking more than eight hours for one deployment.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="methodology" class="slide-section max-w-6xl mx-auto">
+<h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center text-dynamic">Four-Stage Automated Pipeline</h2>
+<div class="relative">
+<div class="hidden md:block absolute top-[40%] left-[5%] w-[90%] h-1 bg-sky-200/50 -translate-y-1/2 z-0"></div>
+<div class="grid md:grid-cols-4 gap-6 relative z-10">
+<div class="glass-card p-6 rounded-2xl text-center">
+<div class="w-12 h-12 mx-auto bg-[var(--button-bg)] text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-md">1</div>
+<h4 class="font-bold text-dynamic mb-2">Data Partitioning</h4>
+<p class="text-sm text-muted-dynamic">The N-BaIoT dataset is partitioned automatically with a Dirichlet distribution (α = 0.5) to simulate realistic non-IID behavior across clients.</p>
+</div>
+<div class="glass-card p-6 rounded-2xl text-center">
+<div class="w-12 h-12 mx-auto bg-[var(--button-bg)] text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-md">2</div>
+<h4 class="font-bold text-dynamic mb-2">Client Configuration</h4>
+<p class="text-sm text-muted-dynamic">Clients are configured automatically with balanced, skewed, and single-class distributions to stress-test the learning system.</p>
+</div>
+<div class="glass-card p-6 rounded-2xl text-center">
+<div class="w-12 h-12 mx-auto bg-[var(--button-bg)] text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-md">3</div>
+<h4 class="font-bold text-dynamic mb-2">Training Orchestration</h4>
+<p class="text-sm text-muted-dynamic">A SAGA-based logistic regression model is trained locally, then aggregated through FedAvg weighted by sample counts.</p>
+</div>
+<div class="glass-card p-6 rounded-2xl text-center">
+<div class="w-12 h-12 mx-auto bg-[var(--button-bg)] text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-md">4</div>
+<h4 class="font-bold text-dynamic mb-2">Convergence & Evaluation</h4>
+<p class="text-sm text-muted-dynamic">The pipeline detects convergence automatically and stops early when 99.99% of final accuracy is reached, enabling single-round deployment.</p>
+</div>
+</div>
+</div>
+
+<div class="mt-10 glass-card p-6 md:p-8 rounded-2xl">
+<h3 class="text-xl font-bold mb-4 text-dynamic">Automated Client Configuration</h3>
+<div class="overflow-x-auto">
+<table class="w-full text-sm md:text-base">
+<thead>
+<tr class="border-b border-sky-200/50">
+<th class="text-left py-3 pr-4 text-sky-500">Client</th>
+<th class="text-left py-3 pr-4 text-sky-500">Samples</th>
+<th class="text-left py-3 pr-4 text-sky-500">Distribution</th>
+<th class="text-left py-3 text-sky-500">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-sky-100/50">
+<td class="py-3 pr-4 font-medium">Client 0</td>
+<td class="py-3 pr-4">178,471</td>
+<td class="py-3 pr-4">60% Benign / 40% Attack</td>
+<td class="py-3">Balanced</td>
+</tr>
+<tr class="border-b border-sky-100/50">
+<td class="py-3 pr-4 font-medium">Client 1</td>
+<td class="py-3 pr-4">178,471</td>
+<td class="py-3 pr-4">5% Benign / 95% Attack</td>
+<td class="py-3">Skewed</td>
+</tr>
+<tr class="border-b border-sky-100/50">
+<td class="py-3 pr-4 font-medium">Client 2</td>
+<td class="py-3 pr-4">178,473</td>
+<td class="py-3 pr-4">0% Benign / 100% Attack</td>
+<td class="py-3">Single-Class</td>
+</tr>
+<tr>
+<td class="py-3 pr-4 font-semibold">Total</td>
+<td class="py-3 pr-4 font-semibold">535,415</td>
+<td class="py-3 pr-4 font-semibold">Non-IID (α = 0.5)</td>
+<td class="py-3">Automated</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<section id="results" class="slide-section max-w-6xl mx-auto">
+<h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center text-dynamic">Experimental Results</h2>
+
+<div class="grid lg:grid-cols-2 gap-8 items-stretch">
+<div class="glass-card p-6 md:p-8 rounded-2xl">
+<h3 class="text-xl font-bold mb-6 text-center text-dynamic">Centralized vs. Federated Performance</h3>
+<div class="relative h-72">
+<canvas id="performanceChart"></canvas>
+</div>
+<div class="mt-5 text-center">
+<span class="inline-block px-4 py-1.5 rounded-full bg-sky-100 text-sky-700 text-sm font-semibold">99.97% Performance Retention</span>
+</div>
+</div>
+
+<div class="glass-card p-6 md:p-8 rounded-2xl flex flex-col justify-center">
+<h3 class="text-xl font-bold mb-4 text-dynamic text-center">Key Security Metrics</h3>
+<p class="text-center text-muted-dynamic text-sm mb-6">Evaluated on 959,496 test samples</p>
+
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-highlight p-5 rounded-xl border border-[var(--card-border)]">
+<div class="text-2xl md:text-3xl font-black text-dynamic mb-1">99.94%</div>
+<div class="text-sm text-muted-dynamic font-medium">Attack Detection</div>
+<div class="text-xs opacity-75 mt-2">840,425 True Positives</div>
+</div>
+<div class="bg-highlight p-5 rounded-xl border border-[var(--card-border)]">
+<div class="text-2xl md:text-3xl font-black text-dynamic mb-1">0.004%</div>
+<div class="text-sm text-muted-dynamic font-medium">False Positive Rate</div>
+<div class="text-xs opacity-75 mt-2">Only 5 False Alarms</div>
+</div>
+<div class="bg-highlight p-5 rounded-xl border border-[var(--card-border)] col-span-2">
+<div class="text-2xl md:text-3xl font-black text-dynamic mb-1">100%</div>
+<div class="text-sm text-muted-dynamic font-medium">Benign Recall</div>
+<div class="text-xs opacity-75 mt-2">Zero valid traffic blocked, 118,574 True Negatives</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="mt-8 glass-card p-6 md:p-8 rounded-2xl">
+<h3 class="text-xl font-bold mb-4 text-dynamic">Confusion Matrix Summary</h3>
+<div class="grid md:grid-cols-4 gap-4">
+<div class="bg-highlight p-5 rounded-xl border border-[var(--card-border)] text-center">
+<div class="text-2xl font-black text-dynamic">118,574</div>
+<div class="text-sm text-muted-dynamic">True Negatives</div>
+</div>
+<div class="bg-highlight p-5 rounded-xl border border-[var(--card-border)] text-center">
+<div class="text-2xl font-black text-dynamic">5</div>
+<div class="text-sm text-muted-dynamic">False Positives</div>
+</div>
+<div class="bg-highlight p-5 rounded-xl border border-[var(--card-border)] text-center">
+<div class="text-2xl font-black text-dynamic">492</div>
+<div class="text-sm text-muted-dynamic">False Negatives</div>
+</div>
+<div class="bg-highlight p-5 rounded-xl border border-[var(--card-border)] text-center">
+<div class="text-2xl font-black text-dynamic">840,425</div>
+<div class="text-sm text-muted-dynamic">True Positives</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="efficiency" class="slide-section max-w-6xl mx-auto">
+<h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center text-dynamic">Communication Efficiency</h2>
+
+<div class="grid lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-7 glass-card p-6 md:p-10 rounded-3xl relative overflow-hidden">
+<h3 class="text-sm font-bold text-sky-500 uppercase tracking-widest mb-6 md:mb-8 text-center relative z-10">Total Data Transfer Required</h3>
+
+<div class="flex flex-col sm:flex-row items-stretch justify-center gap-4 md:gap-6 relative z-10 mb-8">
+<div class="metric-box metric-box-centralized">
+<div class="text-red-500 font-medium mb-2 text-sm uppercase tracking-wide">Centralized (Raw Data)</div>
+<div class="text-4xl md:text-5xl font-black text-red-600">469.76</div>
+<div class="text-lg font-bold text-red-400 mt-1">MB</div>
+</div>
+
+<div class="hidden sm:flex items-center justify-center text-muted-dynamic">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+</svg>
+</div>
+
+<div class="metric-box metric-box-federated">
+<div class="text-sky-600 font-medium mb-2 text-sm uppercase tracking-wide">Automated FL (Params)</div>
+<div class="text-4xl md:text-5xl font-black text-sky-600">108.75</div>
+<div class="text-lg font-bold text-sky-500 mt-1">KB</div>
+</div>
+</div>
+
+<div class="text-center relative z-10 mt-2">
+<span class="inline-block py-2.5 px-6 rounded-full bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold text-lg shadow-lg border border-sky-400 transform hover:scale-105 transition-transform">
+4,423× Smaller Payload
+</span>
+</div>
+</div>
+
+<div class="lg:col-span-5 flex flex-col gap-6">
+<div class="glass-card p-6 rounded-2xl">
+<div class="flex items-center gap-4 mb-3">
+<div class="w-10 h-10 bg-highlight rounded-full flex items-center justify-center text-sky-500 font-bold">⚡</div>
+<h4 class="text-xl font-bold text-dynamic">1-Round Convergence</h4>
+</div>
+<p class="text-muted-dynamic text-sm md:text-base">The automated convergence detector stops training after Round 1 when the threshold is met, supporting fast deployment on constrained infrastructure.</p>
+</div>
+<div class="glass-card p-6 rounded-2xl">
+<div class="flex items-center gap-4 mb-3">
+<div class="w-10 h-10 bg-highlight rounded-full flex items-center justify-center text-sky-500 font-bold">💰</div>
+<h4 class="text-xl font-bold text-dynamic">99.98% Savings</h4>
+</div>
+<p class="text-muted-dynamic text-sm md:text-base">Only 108.75 KB are transferred for the federated process, compared with about 470 MB for centralized raw-data collection.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="insights" class="slide-section">
+<div class="max-w-6xl mx-auto w-full">
+<h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center text-dynamic">Analysis & Insights</h2>
+<div class="grid md:grid-cols-2 gap-6 md:gap-8">
+<div class="glass-card p-6 md:p-8 rounded-2xl">
+<h3 class="text-xl font-bold mb-3 text-dynamic flex items-center gap-2">
+<span>🎯</span> Simple but Distinctive Patterns
+</h3>
+<p class="text-muted-dynamic">Mirai botnet traffic exhibits strong statistical signatures. Because of this, a lightweight SAGA logistic regression model with only 232 parameters achieves strong performance without complex deep learning.</p>
+</div>
+<div class="glass-card p-6 md:p-8 rounded-2xl border-l-4 border-l-emerald-500">
+<h3 class="text-xl font-bold mb-3 text-dynamic flex items-center gap-2">
+<span>🌐</span> Cross-Client Knowledge Transfer
+</h3>
+<p class="text-muted-dynamic"><strong>Most notable result:</strong> Client 2 contains only attack labels, yet still reaches 99.91% accuracy because aggregation transfers benign-class information from the other clients.</p>
+</div>
+<div class="glass-card p-6 md:p-8 rounded-2xl">
+<h3 class="text-xl font-bold mb-3 text-dynamic flex items-center gap-2">
+<span>📦</span> Small Model, Big Practicality
+</h3>
+<p class="text-muted-dynamic">The model size is only 1.81 KB, which makes the approach highly suitable for bandwidth-limited and embedded IoT settings.</p>
+</div>
+<div class="glass-card p-6 md:p-8 rounded-2xl">
+<h3 class="text-xl font-bold mb-3 text-dynamic flex items-center gap-2">
+<span>🧠</span> Automation as the Main Contribution
+</h3>
+<p class="text-muted-dynamic">The paper’s value is not only strong accuracy. It also removes repetitive manual FL setup steps, which is critical for real deployments and easier adoption by practitioners.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="conclusion" class="slide-section">
+<div class="max-w-6xl mx-auto w-full">
+<div class="glass-card p-8 md:p-12 rounded-3xl border-t-8 border-t-sky-500">
+<h2 class="text-3xl md:text-4xl font-bold mb-8 text-center text-dynamic">Conclusion & Future Directions</h2>
+
+<div class="grid md:grid-cols-2 gap-10">
+<div>
+<h3 class="text-2xl font-bold text-sky-500 mb-6">Five Proven Outcomes</h3>
+<ul class="space-y-4 text-muted-dynamic">
+<li class="flex items-start gap-3">
+<span class="text-sky-500 mt-1 font-bold">1.</span>
+<span><strong>Automated Deployment:</strong> Setup reduced from 8+ hours to under 1 hour.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-sky-500 mt-1 font-bold">2.</span>
+<span><strong>Near-Centralized Accuracy:</strong> 99.97% performance retention with only a 0.03% trade-off.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-sky-500 mt-1 font-bold">3.</span>
+<span><strong>Extreme Heterogeneity Support:</strong> 100% single-class clients can still learn effectively.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-sky-500 mt-1 font-bold">4.</span>
+<span><strong>Minimal Communication:</strong> 4,423× lower payload with single-round deployment.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-sky-500 mt-1 font-bold">5.</span>
+<span><strong>Production-Ready Security:</strong> 99.94% detection and 0.004% false positives.</span>
+</li>
+</ul>
+</div>
+
+<div class="bg-highlight p-6 rounded-2xl">
+<h3 class="text-xl font-bold text-dynamic mb-4">Future Research</h3>
+<ul class="space-y-3 text-muted-dynamic text-sm md:text-base">
+<li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-sky-400"></div> Expand to multi-attack classification scenarios</li>
+<li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-sky-400"></div> Deploy on Raspberry Pi and ESP32 hardware</li>
+<li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-sky-400"></div> Integrate automated differential privacy parameter selection</li>
+<li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-sky-400"></div> Reduce the remaining 0.03% accuracy gap</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="py-10 text-center" style="background-color: var(--footer-bg); color: var(--footer-text);">
+<div class="max-w-4xl mx-auto px-6">
+<h3 class="text-lg font-bold text-white mb-2">PAIS26 Conference</h3>
+<p class="mb-4 opacity-80 text-sm">This work will be published soon in IEEE proceedings.</p>
+
+
+
+<div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+<a href="https://drive.google.com/drive/folders/1Tl4kiwN8PY2JDlYMXI87geBZjSq0xKb3?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center gap-2 text-sky-900 bg-sky-100 hover:bg-white px-6 py-2.5 rounded-lg transition-colors font-medium text-sm">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+Read Full Paper
+</a>
+<a href="https://drive.google.com/drive/folders/1Tl4kiwN8PY2JDlYMXI87geBZjSq0xKb3?usp=sharing" class="inline-flex justify-center items-center gap-2 text-white border border-sky-600 hover:bg-sky-800 px-6 py-2.5 rounded-lg transition-colors font-medium text-sm">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+View Conference Certificate
+</a>
+</div>
+
+<div class="inline-flex items-center gap-2 text-xs bg-black/30 px-4 py-2 rounded-full border border-white/10">
+<div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></div>
+Conference paper under review / verification in progress
+</div>
+</div>
+</footer>
+
+<script>
+const htmlEl = document.documentElement;
+const themeToggle = document.getElementById('theme-toggle');
+
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+htmlEl.setAttribute('data-theme', 'dark');
+}
+
+themeToggle.addEventListener('click', () => {
+const currentTheme = htmlEl.getAttribute('data-theme');
+htmlEl.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+});
+
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('visible');
+document.querySelectorAll('.nav-dot').forEach(dot => {
+if (dot.dataset.target === entry.target.id) {
+dot.classList.replace('bg-sky-300', 'bg-sky-600');
+dot.classList.add('scale-150');
+} else {
+dot.classList.replace('bg-sky-600', 'bg-sky-300');
+dot.classList.remove('scale-150');
+}
+});
+}
+});
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.slide-section').forEach(section => {
+observer.observe(section);
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+e.preventDefault();
+const targetId = this.getAttribute('href');
+if (targetId === "#") return;
+const targetElement = document.querySelector(targetId);
+if (targetElement) {
+targetElement.scrollIntoView({
+behavior: 'smooth'
+});
+}
+});
+});
+
+const chartCanvas = document.getElementById('performanceChart');
+if (chartCanvas) {
+const isDark = () => htmlEl.getAttribute('data-theme') === 'dark';
+
+let performanceChart;
+
+const buildChart = () => {
+if (performanceChart) {
+performanceChart.destroy();
+}
+
+performanceChart = new Chart(chartCanvas, {
+type: 'bar',
+data: {
+labels: ['Accuracy', 'F1-Score', 'Recall'],
+datasets: [
+{
+label: 'Centralized',
+data: [99.94, 99.97, 99.94],
+backgroundColor: isDark() ? 'rgba(148, 163, 184, 0.75)' : 'rgba(100, 116, 139, 0.75)',
+borderColor: isDark() ? '#cbd5e1' : '#475569',
+borderWidth: 1,
+borderRadius: 10
+},
+{
+label: 'Automated FL',
+data: [99.91, 99.95, 99.91],
+backgroundColor: 'rgba(14, 165, 233, 0.85)',
+borderColor: '#0284c7',
+borderWidth: 1,
+borderRadius: 10
+}
+]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+labels: {
+color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim()
+}
+},
+tooltip: {
+callbacks: {
+label: function(context) {
+return context.dataset.label + ': ' + context.parsed.y + '%';
+}
+}
+}
+},
+scales: {
+x: {
+ticks: {
+color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim()
+},
+grid: {
+color: isDark() ? 'rgba(255,255,255,0.06)' : 'rgba(2,132,199,0.08)'
+}
+},
+y: {
+min: 99.85,
+max: 100.00,
+ticks: {
+color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim(),
+callback: function(value) {
+return value.toFixed(2) + '%';
+}
+},
+grid: {
+color: isDark() ? 'rgba(255,255,255,0.06)' : 'rgba(2,132,199,0.08)'
+}
+}
+}
+}
+});
+};
+
+buildChart();
+themeToggle.addEventListener('click', () => {
+setTimeout(buildChart, 50);
+});
+}
+</script>
+</body>
+</html>
