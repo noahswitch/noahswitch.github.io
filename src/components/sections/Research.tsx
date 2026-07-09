@@ -24,16 +24,16 @@ export function Research() {
               key={paper.id}
               paper={paper}
               icon={paperIcons[paper.id as keyof typeof paperIcons]}
-              figure={
-                paper.id === "xai-ids"
-                  ? {
-                      src: withBasePath("/ASREM2026/assets/xai-ids/03_model_comparison_bar.png"),
-                      width: 1932,
-                      height: 882,
-                      alt: "Bar chart comparing macro F1 scores of Random Forest, XGBoost, and LightGBM on the RT-IoT2022 benchmark",
-                    }
-                  : undefined
-              }
+              // figure={
+              //   paper.id === "xai-ids"
+              //     ? {
+              //         src: withBasePath("/ASREM2026/assets/xai-ids/03_model_comparison_bar.png"),
+              //         width: 1932,
+              //         height: 882,
+              //         alt: "Bar chart comparing macro F1 scores of Random Forest, XGBoost, and LightGBM on the RT-IoT2022 benchmark",
+              //       }
+              //     : undefined
+              // }
             />
           ))}
 
