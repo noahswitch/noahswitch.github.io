@@ -269,7 +269,7 @@ export const dailyTools: DailyTool[] = [
       "Live two-pane sync: rich editor ↔ raw HTML source in real time",
       "Zero-dependency export pipeline — produces clean, portable HTML files",
     ],
-    link: "https://noahswitch.github.io/NoahSwitch-MailForge",
+    link: "https://noahswitch.github.io/Doc2HTML",
     
   },
 ];
