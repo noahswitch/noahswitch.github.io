@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Noah-Console — Platform Walkthrough</title>
+<style>
+  :root{
+    --bg:#0b0d17;
+    --bg-alt:#12152a;
+    --accent:#6c5ce7;
+    --accent2:#8b7cf6;
+    --text:#eef0fb;
+    --muted:#9aa0c0;
+    --card:#161a30;
+    --border:rgba(255,255,255,0.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:4px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    width:0%;z-index:1000;transition:width .15s ease-out;
+  }
+  nav{
+    position:fixed;top:0;left:0;right:0;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 40px;
+    background:rgba(11,13,23,0.75);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    z-index:900;
+    gap:20px;
+  }
+  nav .logo{
+    font-weight:700;font-size:1.2rem;
+    background:linear-gradient(90deg,var(--accent2),#ff7ac6);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    letter-spacing:.5px;
+    white-space:nowrap;
+  }
+  nav .nav-right{
+    display:flex;align-items:center;gap:20px;
+  }
+  nav .menu-toggle{
+    display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer;
+  }
+  nav ul{
+    list-style:none;display:flex;gap:22px;flex-wrap:wrap;
+  }
+  nav ul li a{
+    color:var(--muted);text-decoration:none;font-size:.82rem;
+    display:flex;align-items:center;gap:6px;
+    transition:color .25s;
+    position:relative;padding:4px 0;
+  }
+  nav ul li a .dot{
+    width:6px;height:6px;border-radius:50%;background:var(--muted);
+    transition:background .25s, box-shadow .25s;
+  }
+  nav ul li a:hover, nav ul li a.active{color:var(--text);}
+  nav ul li a.active .dot{
+    background:var(--accent2);
+    box-shadow:0 0 8px var(--accent2);
+  }
+
+  .live-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    color:#fff;text-decoration:none;font-size:.82rem;font-weight:600;
+    padding:9px 18px;border-radius:24px;white-space:nowrap;
+    box-shadow:0 4px 18px rgba(108,92,231,0.45);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .live-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 26px rgba(108,92,231,0.6);
+  }
+  .live-btn .pulse{
+    width:8px;height:8px;border-radius:50%;background:#4ade80;
+    box-shadow:0 0 0 rgba(74,222,128,0.7);
+    animation:pulse 1.8s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(74,222,128,0.7);}
+    70%{box-shadow:0 0 0 8px rgba(74,222,128,0);}
+    100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}
+  }
+
+  header.hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;position:relative;overflow:hidden;
+    padding:0 20px;
+  }
+  header.hero::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 20% 20%, rgba(108,92,231,0.35), transparent 40%),
+               radial-gradient(circle at 80% 70%, rgba(139,124,246,0.25), transparent 45%);
+    animation:drift 12s ease-in-out infinite alternate;
+    z-index:0;
+  }
+  @keyframes drift{
+    0%{transform:translate(0,0) scale(1);}
+    100%{transform:translate(3%,-3%) scale(1.05);}
+  }
+  .stars{position:absolute;inset:0;z-index:0;}
+  .star{
+    position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;
+    opacity:.6;animation:twinkle 3s infinite ease-in-out;
+  }
+  @keyframes twinkle{0%,100%{opacity:.2;}50%{opacity:1;}}
+  header.hero h1{
+    font-size:clamp(2.4rem,6vw,4.5rem);
+    font-weight:800;position:relative;z-index:1;
+    background:linear-gradient(90deg,#fff,var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:fadeUp 1s ease both;
+  }
+  header.hero p.tagline{
+    margin-top:18px;font-size:clamp(1rem,2vw,1.3rem);color:var(--muted);
+    position:relative;z-index:1;max-width:640px;
+    animation:fadeUp 1s .2s ease both;
+  }
+  header.hero .hero-live-btn{
+    margin-top:34px;position:relative;z-index:1;
+    animation:fadeUp 1s .3s ease both;
+    font-size:1rem;padding:14px 30px;
+  }
+  header.hero .scroll-cue{
+    margin-top:50px;color:var(--muted);font-size:.85rem;
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    position:relative;z-index:1;
+    animation:fadeUp 1s .4s ease both;
+  }
+  .scroll-cue .arrow{
+    width:22px;height:34px;border:2px solid var(--muted);border-radius:14px;
+    position:relative;
+  }
+  .scroll-cue .arrow::before{
+    content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);
+    width:4px;height:8px;background:var(--accent2);border-radius:2px;
+    animation:scrollDot 1.6s infinite;
+  }
+  @keyframes scrollDot{
+    0%{opacity:1;top:6px;}
+    70%{opacity:0;top:18px;}
+    100%{opacity:0;top:6px;}
+  }
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  .stat-row{
+    display:flex;gap:40px;margin-top:50px;flex-wrap:wrap;justify-content:center;
+    position:relative;z-index:1;
+  }
+  .stat{
+    text-align:center;
+    animation:fadeUp 1s .3s ease both;
+  }
+  .stat .num{
+    font-size:2.2rem;font-weight:800;color:var(--accent2);
+  }
+  .stat .label{font-size:.8rem;color:var(--muted);margin-top:4px;}
+
+  main{position:relative;z-index:1;}
+  section.slide{
+    min-height:100vh;display:flex;align-items:center;
+    padding:100px 6vw;position:relative;
+    border-top:1px solid var(--border);
+  }
+  section.slide:nth-of-type(even){background:var(--bg-alt);}
+  .slide-inner{
+    display:flex;align-items:center;gap:60px;width:100%;max-width:1300px;margin:0 auto;
+    flex-wrap:wrap;
+  }
+  .slide-inner.reverse{flex-direction:row-reverse;}
+  .text-block, .image-block{
+    flex:1 1 420px;
+    opacity:0;transform:translateY(40px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .slide-inner.reverse .text-block{transform:translateX(40px);}
+  .slide-inner:not(.reverse) .text-block{transform:translateX(-40px);}
+  .slide.in-view .text-block, .slide.in-view .image-block{
+    opacity:1;transform:translate(0,0) !important;
+  }
+  .badge{
+    display:inline-block;font-size:.75rem;letter-spacing:2px;color:var(--accent2);
+    border:1px solid var(--accent2);border-radius:20px;padding:4px 14px;margin-bottom:18px;
+  }
+  .text-block h2{
+    font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:800;margin-bottom:6px;
+  }
+  .text-block h3{
+    font-size:1.1rem;color:var(--accent2);font-weight:500;margin-bottom:18px;
+  }
+  .text-block p{
+    color:var(--muted);line-height:1.7;font-size:1.02rem;
+  }
+  .image-block{
+    position:relative;
+    min-height:220px;
+  }
+  .image-block img{
+    width:100%;border-radius:14px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+    border:1px solid var(--border);
+    transition:transform .4s ease, box-shadow .4s ease;
+    display:block;
+    background:var(--card);
+    min-height:180px;
+  }
+  .image-block img.img-missing{
+    opacity:0;
+  }
+  .image-block:hover img{
+    transform:translateY(-6px) scale(1.015);
+    box-shadow:0 30px 80px rgba(108,92,231,0.35);
+  }
+  .image-block::after{
+    content:"";position:absolute;inset:-12px;
+    background:linear-gradient(135deg, rgba(108,92,231,0.25), transparent 60%);
+    border-radius:20px;z-index:-1;filter:blur(20px);
+  }
+  .img-placeholder-label{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:20px;font-size:.85rem;color:var(--muted);
+    border:2px dashed var(--border);border-radius:14px;
+    background:var(--card);pointer-events:none;
+  }
+
+  footer{
+    text-align:center;padding:60px 20px;color:var(--muted);font-size:.85rem;
+    border-top:1px solid var(--border);
+  }
+  footer .logo{
+    font-weight:700;color:var(--text);margin-bottom:8px;display:block;font-size:1.1rem;
+  }
+  footer .live-btn{margin-top:20px;}
+
+  @media (max-width:900px){
+    nav ul{
+      position:fixed;top:64px;right:0;height:calc(100vh - 64px);width:260px;
+      background:rgba(11,13,23,0.97);flex-direction:column;padding:30px 20px;
+      transform:translateX(100%);transition:transform .3s ease;overflow-y:auto;
+    }
+    nav ul.open{transform:translateX(0);}
+    nav .menu-toggle{display:block;}
+    .slide-inner, .slide-inner.reverse{flex-direction:column;}
+    section.slide{padding:80px 6vw;}
+    nav .nav-right .live-btn span.label{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <div class="logo">Noah-Console</div>
+  <div class="nav-right">
+    <ul id="navList">
+      <li><a href="#add-product"><span class="dot"></span>Add Product</a></li>
+      <li><a href="#notifications"><span class="dot"></span>Notifications Center</a></li>
+      <li><a href="#audit-logs"><span class="dot"></span>Audit Logs</a></li>
+      <li><a href="#company-details"><span class="dot"></span>Company Details</a></li>
+      <li><a href="#suppliers"><span class="dot"></span>Suppliers</a></li>
+      <li><a href="#finance"><span class="dot"></span>Finance Dashboard</a></li>
+      <li><a href="#purchase-orders"><span class="dot"></span>Purchase Orders</a></li>
+      <li><a href="#invoice"><span class="dot"></span>Order Invoicing</a></li>
+      <li><a href="#catalog"><span class="dot"></span>Customer Catalog</a></li>
+      <li><a href="#clients"><span class="dot"></span>Clients</a></li>
+      <li><a href="#sign-in"><span class="dot"></span>Customer Sign In</a></li>
+      <li><a href="#orders"><span class="dot"></span>Orders</a></li>
+    </ul>
+    <a class="live-btn" href="https://mng.mynoah.fr/" target="_blank" rel="noopener noreferrer">
+      <span class="pulse"></span><span class="label">Live view</span>
+    </a>
+    <button class="menu-toggle" id="menuToggle">&#9776;</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="stars" id="stars"></div>
+  <h1>Noah-Console</h1>
+  <p class="tagline">A complete walkthrough of the order, invoicing, product and finance management platform — from admin backoffice to customer storefront.</p>
+  <a class="live-btn hero-live-btn" href="https://mng.mynoah.fr/" target="_blank" rel="noopener noreferrer">
+    <span class="pulse"></span> Live view
+  </a>
+  <div class="stat-row">
+    <div class="stat"><div class="num">12</div><div class="label">Core modules</div></div>
+    <div class="stat"><div class="num">5</div><div class="label">Order stages</div></div>
+    <div class="stat"><div class="num">3</div><div class="label">Currencies live</div></div>
+    <div class="stat"><div class="num">100%</div><div class="label">Audit traceability</div></div>
+  </div>
+  <div class="scroll-cue"><div class="arrow"></div>Scroll to explore</div>
+</header>
+
+<main>
+
+  <section class="slide" id="add-product">
+    <div class="slide-inner">
+      <div class="text-block">
+        <span class="badge">01</span>
+        <h2>Add Product</h2>
+        <h3>Rich product catalog management</h3>
+        <p>Admins can create detailed product listings with SKU, category, pricing, stock, tax rate, dimensions, weight and barcode. Support for virtual/digital products, multiple image URLs, and direct supplier &amp; cost-price linking makes catalog onboarding fast and complete.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/add-product.png" alt="Add Product" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/add-product.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="notifications">
+    <div class="slide-inner reverse">
+      <div class="text-block">
+        <span class="badge">02</span>
+        <h2>Notifications Center</h2>
+        <h3>Stay on top of activity</h3>
+        <p>A persistent notification badge in the top bar keeps admins aware of new events across orders, invoices and inventory, without leaving the current workflow.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/notifications.png" alt="Notifications Center" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/notifications.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="audit-logs">
+    <div class="slide-inner">
+      <div class="text-block">
+        <span class="badge">03</span>
+        <h2>Audit Logs</h2>
+        <h3>Full traceability of every change</h3>
+        <p>Every order update, invoice generation and edit is timestamped and attributed to the acting admin, with an expandable diff view for line-level accountability and compliance.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/audit-logs.png" alt="Audit Logs" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/audit-logs.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="company-details">
+    <div class="slide-inner reverse">
+      <div class="text-block">
+        <span class="badge">04</span>
+        <h2>Company Details</h2>
+        <h3>Your brand, your invoices</h3>
+        <p>Configurable text fields define what appears on the invoice 'From' block, plus custom invoice numbering with prefixes so every document stays on-brand and sequential.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/company-details.png" alt="Company Details" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/company-details.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="suppliers">
+    <div class="slide-inner">
+      <div class="text-block">
+        <span class="badge">05</span>
+        <h2>Suppliers</h2>
+        <h3>Track vendor relationships</h3>
+        <p>A consolidated supplier directory shows contact details and total spend per vendor, giving procurement teams instant visibility into where budget is going.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/suppliers.png" alt="Suppliers" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/suppliers.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="finance">
+    <div class="slide-inner reverse">
+      <div class="text-block">
+        <span class="badge">06</span>
+        <h2>Finance Dashboard</h2>
+        <h3>Income, expense and net at a glance</h3>
+        <p>Filter transactions by date range, view paid vs unpaid status, and log new income or expense entries. Built-in multi-currency rate table (USD, HUF, DZD) keeps international finances aligned.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/finance.png" alt="Finance Dashboard" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/finance.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="purchase-orders">
+    <div class="slide-inner">
+      <div class="text-block">
+        <span class="badge">07</span>
+        <h2>Purchase Orders</h2>
+        <h3>From sent to received</h3>
+        <p>Purchase orders link directly to suppliers and track lifecycle status — Sent or Received — so restocking and procurement pipelines stay transparent.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/purchase-orders.png" alt="Purchase Orders" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/purchase-orders.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="invoice">
+    <div class="slide-inner reverse">
+      <div class="text-block">
+        <span class="badge">08</span>
+        <h2>Order Invoicing</h2>
+        <h3>Generate, edit, and send</h3>
+        <p>Each confirmed order carries its own editable invoice: issuer details, currency, notes, and auto-filled bill-to information. PDFs can be downloaded, regenerated or emailed directly to the client.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/invoice.png" alt="Order Invoicing" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/invoice.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="catalog">
+    <div class="slide-inner">
+      <div class="text-block">
+        <span class="badge">09</span>
+        <h2>Customer Catalog</h2>
+        <h3>The storefront experience</h3>
+        <p>A polished public-facing catalog lets customers browse by category, search products, switch currency, and add items to cart — all wrapped in an animated, interactive starfield hero.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/catalog.png" alt="Customer Catalog" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/catalog.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="clients">
+    <div class="slide-inner reverse">
+      <div class="text-block">
+        <span class="badge">10</span>
+        <h2>Clients</h2>
+        <h3>Know your customers</h3>
+        <p>The client directory aggregates account type, order count, total spend and join date, with a direct link to view each customer's full order history.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/clients.png" alt="Clients" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/clients.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="sign-in">
+    <div class="slide-inner">
+      <div class="text-block">
+        <span class="badge">11</span>
+        <h2>Customer Sign In</h2>
+        <h3>Secure storefront access</h3>
+        <p>A clean, minimal authentication screen lets returning customers sign in to track orders and manage their account on the storefront.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/sign-in.png" alt="Customer Sign In" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/sign-in.png</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="orders">
+    <div class="slide-inner reverse">
+      <div class="text-block">
+        <span class="badge">12</span>
+        <h2>Orders</h2>
+        <h3>The operational core</h3>
+        <p>Every order shows client, status (Confirmed, Shipped, Delivered), payment method and paid/unpaid state, and creation date — the single source of truth tying the whole platform together.</p>
+      </div>
+      <div class="image-block">
+        <img src="images/orders.png" alt="Orders" loading="lazy" onerror="this.classList.add('img-missing')"/>
+        <div class="img-placeholder-label">Add screenshot: images/orders.png</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="logo">Noah-Console</span>
+  Order management, invoicing, inventory and finance — all in one interface.
+  <div>
+    <a class="live-btn" href="https://mng.mynoah.fr/" target="_blank" rel="noopener noreferrer">
+      <span class="pulse"></span> Live view
+    </a>
+  </div>
+</footer>
+
+<script>
+  const starsEl = document.getElementById('stars');
+  for(let i=0;i<80;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    s.style.width = s.style.height = (Math.random()*2+1)+'px';
+    starsEl.appendChild(s);
+  }
+
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', ()=>{
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop)/(h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = scrolled+'%';
+  });
+
+  const slides = document.querySelectorAll('.slide');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  },{threshold:0.25});
+  slides.forEach(s=>observer.observe(s));
+
+  const navLinks = document.querySelectorAll('nav ul li a');
+  const navList = document.getElementById('navList');
+  document.getElementById('menuToggle').addEventListener('click', ()=>{
+    navList.classList.toggle('open');
+  });
+  navLinks.forEach(link=>{
+    link.addEventListener('click', ()=> navList.classList.remove('open'));
+  });
+
+  const sectionEls = document.querySelectorAll('section.slide');
+  const navObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        navLinks.forEach(l=>l.classList.remove('active'));
+        const active = document.querySelector(`nav ul li a[href="#${entry.target.id}"]`);
+        if(active) active.classList.add('active');
+      }
+    });
+  },{rootMargin:"-40% 0px -40% 0px"});
+  sectionEls.forEach(s=>navObserver.observe(s));
+
+  document.querySelectorAll('.image-block img').forEach(img=>{
+    img.addEventListener('load', ()=>{
+      const label = img.parentElement.querySelector('.img-placeholder-label');
+      if(label) label.style.display = 'none';
+    });
+  });
+</script>
+</body>
+</html>

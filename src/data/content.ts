@@ -200,6 +200,7 @@ export const projects: Project[] = [
     lessons:
       "Designing the data model around how stock actually moves (not how it's reported) made every feature after it — audits, PDFs, multi-location views — fall out almost for free.",
     featured: true,
+    link: "https://noahswitch.github.io/NoahSwitch-MailForge",
   },
   {
     id: "nlp-sentiment",
@@ -267,7 +268,7 @@ export const dailyTools: DailyTool[] = [
       "Live two-pane sync: rich editor ↔ raw HTML source in real time",
       "Zero-dependency export pipeline — produces clean, portable HTML files",
     ],
-    link: "https://noahswitch.github.io/Doc2HTML/",
+    link: withBasePath("/Noah-console/"),
   },
 ];
 
