@@ -307,7 +307,7 @@ export const research: ResearchPaper[] = [
   {
     id: "auto-fl-iot",
     title: "Automated Privacy-Preserving FL for IoT Intrusion Detection",
-    venue: "PAIS26",
+    venue: "PAIS26-IEEE",
     year: "2026",
     summary:
       "Interactive research presentation on a privacy-preserving federated learning pipeline for IoT intrusion detection. The work focuses on automated deployment, non-IID robustness, low-bandwidth communication, and near-centralized performance without exposing raw device data.",
