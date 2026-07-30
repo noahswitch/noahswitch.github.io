@@ -269,8 +269,7 @@ export const dailyTools: DailyTool[] = [
     id: "noah-landingbuilder",
     title: "Noah-LandingPage",
     description:
-      "A landing-page builder and lead console. Design pages from raw HTML using simple placeholder tokens, publish them to their own URL, and turn every submission into a tracked sales record.",
-      "To see the full project, please get in touch.",
+      "A landing-page builder and lead console. Design pages from raw HTML using simple placeholder tokens, publish them to their own URL, and turn every submission into a tracked sales record. To see the full project, please get in touch.",
     tags: ["Next.js", "TypeScript", "MongoDB", "React"],
     results: [
       "Token-based editor ({{form}}, {{field:ID}}, {{submit}}) that turns hand-written HTML into a working, styleable lead form",
