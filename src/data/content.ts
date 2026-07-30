@@ -280,11 +280,19 @@ export const dailyTools: DailyTool[] = [
   },
   {
     id: "mailforge",
-    title: "MailForge",
+    title: "Noah-MailForge",
     description: "Email workflow and message-generation tool I use daily for communication and fast content drafting.",
     tags: ["Email", "Automation", "Productivity"],
     results: ["Helps streamline daily communication tasks", "Built for fast, reusable email workflows"],
     link: "https://noahswitch.github.io/NoahSwitch-MailForge",
+  },
+    {
+    id: "EntraID-PowerShellToolkit",
+    title: "Noah-PowerShellToolkit",
+    description: "An interactive, full-stack Next.js web application that catalogs the PowerShell commands an Intune / Microsoft Entra ID / Windows system administrator uses every day.",
+    tags: ["PowerShell", "Automation", "EntraID", "Toolkit"],
+    results: ["Helps streamline daily tasks", "Built for fast"],
+    link: "https://entra.mynoah.fr/",
   },
   
 
