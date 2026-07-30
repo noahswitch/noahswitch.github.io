@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Noah — Landing Page Builder &amp; Lead Console · Case Study</title>
+<meta name="description" content="A case study of Noah-LandingBuilder: a Next.js landing-page builder with a token-based editor, lead capture, and a leads → opportunities → confirmed-orders pipeline." />
+<style>
+  :root {
+    --paper: #f6f7fb;
+    --surface: #ffffff;
+    --surface-2: #f0f2f8;
+    --ink: #10151f;
+    --muted: #5b6675;
+    --line: #e4e8f0;
+    --accent: #3f6bff;
+    --accent-weak: #e9f0ff;
+    --green: #12936a;
+    --green-weak: #e3f4ee;
+    --amber: #b9822b;
+    --amber-weak: #f8efdd;
+    --shadow: 0 1px 2px rgba(16,21,31,.04), 0 8px 30px rgba(16,21,31,.06);
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --maxw: 1080px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0c0f16;
+      --surface: #131824;
+      --surface-2: #0f1420;
+      --ink: #e9edf6;
+      --muted: #93a0b4;
+      --line: #232b3a;
+      --accent: #6b93ff;
+      --accent-weak: #17233f;
+      --green: #2bb488;
+      --green-weak: #123027;
+      --amber: #e0a44f;
+      --amber-weak: #2e2513;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #f6f7fb; --surface: #ffffff; --surface-2: #f0f2f8; --ink: #10151f;
+    --muted: #5b6675; --line: #e4e8f0; --accent: #3f6bff; --accent-weak: #e9f0ff;
+    --green: #12936a; --green-weak: #e3f4ee; --amber: #b9822b; --amber-weak: #f8efdd;
+    --shadow: 0 1px 2px rgba(16,21,31,.04), 0 8px 30px rgba(16,21,31,.06);
+  }
+  :root[data-theme="dark"] {
+    --paper: #0c0f16; --surface: #131824; --surface-2: #0f1420; --ink: #e9edf6;
+    --muted: #93a0b4; --line: #232b3a; --accent: #6b93ff; --accent-weak: #17233f;
+    --green: #2bb488; --green-weak: #123027; --amber: #e0a44f; --amber-weak: #2e2513;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  h1, h2, h3 { line-height: 1.12; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before {
+    content: ""; width: 22px; height: 1px; background: var(--accent); opacity: .6;
+  }
+  .muted { color: var(--muted); }
+  .mono { font-family: var(--mono); }
+
+  /* top bar */
+  header.topbar {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: saturate(150%) blur(8px);
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 12px 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .brand { font-weight: 700; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+  .brand .dot {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, #12936a));
+    display: inline-grid; place-items: center; color: #fff; font-family: var(--mono); font-size: 13px; font-weight: 700;
+  }
+  .topnav { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+  .topnav a { color: var(--muted); font-size: 14px; }
+  .topnav a:hover { color: var(--ink); text-decoration: none; }
+  .toggle {
+    font-family: var(--mono); font-size: 12px; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--line); color: var(--ink);
+    padding: 6px 10px; border-radius: 8px;
+  }
+  @media (max-width: 720px) { .topnav a { display: none; } }
+
+  /* hero */
+  .hero { padding: 76px 0 40px; position: relative; overflow: hidden; }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px);
+    background-size: 34px 34px;
+    -webkit-mask-image: radial-gradient(120% 70% at 50% 0%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(120% 70% at 50% 0%, #000 30%, transparent 75%);
+    opacity: .5;
+  }
+  .hero h1 { font-size: clamp(34px, 6vw, 60px); font-weight: 800; max-width: 15ch; }
+  .hero .lede { font-size: clamp(17px, 2.2vw, 21px); color: var(--muted); max-width: 60ch; margin-top: 20px; }
+  .hero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    font: inherit; font-size: 15px; font-weight: 600;
+    padding: 11px 18px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink); transition: transform .12s ease, border-color .12s ease;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.success { background: var(--green); border-color: var(--green); color: #fff; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 34px; }
+  .chip {
+    font-family: var(--mono); font-size: 12.5px; color: var(--muted);
+    border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 12px;
+  }
+  .chip b { color: var(--ink); font-weight: 600; }
+
+  /* sections */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  section h2 { font-size: clamp(24px, 3.4vw, 34px); font-weight: 750; max-width: 20ch; }
+  .section-lede { color: var(--muted); max-width: 62ch; margin-top: 14px; font-size: 17px; }
+
+  .grid { display: grid; gap: 18px; }
+  .cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cols-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 860px) { .cols-2, .cols-3 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px; box-shadow: var(--shadow);
+  }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 15px; }
+  .card .ic {
+    width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center;
+    background: var(--accent-weak); color: var(--accent); margin-bottom: 14px;
+    font-family: var(--mono); font-weight: 700; font-size: 15px;
+  }
+
+  /* token explainer */
+  .token-row { display: grid; grid-template-columns: 200px 1fr; gap: 14px 22px; align-items: baseline; }
+  @media (max-width: 620px) { .token-row { grid-template-columns: 1fr; gap: 4px 0; } .token-row .tk { margin-top: 12px; } }
+  .tk {
+    font-family: var(--mono); font-size: 14px; color: var(--accent);
+    background: var(--accent-weak); border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+    padding: 3px 9px; border-radius: 7px; display: inline-block; white-space: nowrap;
+  }
+
+  /* pipeline diagram */
+  .pipe { display: flex; flex-wrap: wrap; align-items: stretch; gap: 12px; }
+  .pipe .node {
+    flex: 1; min-width: 150px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px; position: relative;
+  }
+  .pipe .node .k { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .pipe .node .v { font-weight: 700; margin-top: 6px; }
+  .pipe .node .d { color: var(--muted); font-size: 13.5px; margin-top: 6px; }
+  .pipe .arrow { align-self: center; color: var(--muted); font-family: var(--mono); }
+  @media (max-width: 720px) { .pipe .arrow { display: none; } }
+
+  /* DEMO */
+  .demo { background: var(--surface-2); }
+  .demo-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; margin-top: 26px; }
+  @media (max-width: 900px) { .demo-grid { grid-template-columns: 1fr; } }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+  .panel-head {
+    display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+    border-bottom: 1px solid var(--line); background: var(--surface-2);
+  }
+  .panel-head .t { font-weight: 700; font-size: 14px; }
+  .panel-head .step {
+    font-family: var(--mono); font-size: 11px; color: #fff; background: var(--accent);
+    border-radius: 999px; padding: 2px 9px;
+  }
+  .panel-body { padding: 16px; }
+  .lbl { font-size: 12px; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; display: block; }
+  textarea.code, input.inp {
+    width: 100%; background: var(--surface-2); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 9px; padding: 10px 12px; font-size: 14px; font-family: var(--sans);
+  }
+  textarea.code { font-family: var(--mono); font-size: 13px; line-height: 1.55; resize: vertical; min-height: 132px; }
+  .hint { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+  .hint code { font-family: var(--mono); background: var(--surface-2); padding: 1px 5px; border-radius: 5px; border: 1px solid var(--line); }
+
+  /* preview render area (the "public page") */
+  .preview {
+    border: 1px dashed color-mix(in srgb, var(--accent) 40%, var(--line));
+    border-radius: 10px; padding: 16px; background: var(--paper);
+  }
+  .preview h2 { font-size: 20px; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .preview p { color: var(--muted); font-size: 14px; }
+  .preview .demo-field { margin-top: 10px; }
+  .preview label.fl { display: block; font-size: 13px; color: var(--ink); margin-bottom: 4px; }
+  .preview .req { color: #d1495b; }
+  .preview .demo-inp {
+    width: 100%; padding: 9px 11px; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink); font-size: 14px;
+  }
+  .preview .demo-submit {
+    margin-top: 12px; background: var(--accent); color: #fff; border: none; border-radius: 8px;
+    padding: 10px 18px; font-weight: 700; font-size: 14px; cursor: pointer;
+  }
+
+  table.t { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  table.t th, table.t td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  table.t th { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+  .badge { display: inline-block; font-size: 11.5px; font-family: var(--mono); padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); }
+  .badge.green { color: var(--green); background: var(--green-weak); border-color: color-mix(in srgb, var(--green) 40%, var(--line)); }
+  .badge.amber { color: var(--amber); background: var(--amber-weak); border-color: color-mix(in srgb, var(--amber) 40%, var(--line)); }
+  .badge.blue { color: var(--accent); background: var(--accent-weak); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+  .mini-btn { font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; padding: 4px 10px; border-radius: 7px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .mini-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .mini-btn.success { background: var(--green); border-color: var(--green); color: #fff; }
+  .empty { color: var(--muted); font-size: 13px; padding: 14px 4px; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: var(--paper); padding: 11px 16px; border-radius: 10px;
+    font-size: 14px; font-weight: 600; box-shadow: var(--shadow); opacity: 0; pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease; z-index: 100; max-width: 88vw;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .stack { display: grid; gap: 10px; }
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .kv:last-child { border-bottom: 0; }
+  .kv .k { color: var(--muted); font-size: 14px; }
+  .kv .v { font-weight: 600; font-size: 14px; text-align: right; }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0 60px; color: var(--muted); font-size: 14px; }
+  .foot-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand"><span class="dot">N</span> Noah</span>
+    <nav class="topnav">
+      <a href="#concept">Concept</a>
+      <a href="#how">How it works</a>
+      <a href="#demo">Demo</a>
+      <a href="#stack">Stack</a>
+    </nav>
+    <button class="toggle" id="themeBtn" type="button" aria-label="Toggle color theme">◑ Theme</button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" style="border-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Case study · Full-stack web app</p>
+      <h1>A landing-page builder with a lead-to-order pipeline built in.</h1>
+      <p class="lede">
+        Noah lets a marketing team design a landing page from raw HTML, publish it, and turn every
+        submission into a tracked sales record — from first lead to a confirmed order — inside one console.
+        No page-builder subscriptions, no spreadsheets, no copy-pasting between tools.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#demo">Try the live demo ↓</a>
+        <a class="btn" href="#how">See how it works</a>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>Next.js 14</b> · App Router</span>
+        <span class="chip"><b>TypeScript</b></span>
+        <span class="chip"><b>MongoDB</b> · Mongoose</span>
+        <span class="chip">Server components + route handlers</span>
+        <span class="chip">Role-based access</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCEPT -->
+  <section id="concept">
+    <div class="wrap">
+      <p class="eyebrow">The concept</p>
+      <h2>One app, two audiences, one database.</h2>
+      <p class="section-lede">
+        The team works inside a private <b>console</b>; the public sees only the finished, published pages.
+        Both are the same application over a single MongoDB, so a page you build is instantly the page a visitor lands on —
+        and every submission flows straight back into the console as a lead.
+      </p>
+
+      <div class="grid cols-3" style="margin-top:28px">
+        <div class="card">
+          <div class="ic">01</div>
+          <h3>Build</h3>
+          <p>Paste HTML into the editor and drop in placeholder tokens where the form and its fields should appear. Style each field, set the button, and preview it live.</p>
+        </div>
+        <div class="card">
+          <div class="ic">02</div>
+          <h3>Publish &amp; collect</h3>
+          <p>Publishing makes the page public at its own URL. Visitors submit the form; each submission is validated on the server and stored as a structured lead, then the visitor is forwarded onward.</p>
+        </div>
+        <div class="card">
+          <div class="ic">03</div>
+          <h3>Convert &amp; confirm</h3>
+          <p>Promote a lead to an opportunity, then confirm it with an order number. Export leads and opportunities to CSV whenever you need them elsewhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Design in HTML, place the form with tokens.</h2>
+      <p class="section-lede">
+        Instead of a rigid drag-and-drop, the builder keeps your HTML exactly as designed and replaces small
+        placeholder tokens with real, working form elements. It's the flexibility of hand-written markup with the
+        convenience of a form builder.
+      </p>
+
+      <div class="card" style="margin-top:26px">
+        <div class="token-row">
+          <span class="tk">{{form}}</span>
+          <p class="muted" style="margin:0">Renders the whole form — every field plus the submit button — wherever you place it.</p>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:16px 0" />
+        <div class="token-row">
+          <span class="tk">{{field:ID}}</span>
+          <p class="muted" style="margin:0">Places one specific field inline, so you can weave inputs into your own custom layout.</p>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:16px 0" />
+        <div class="token-row">
+          <span class="tk">{{submit}}</span>
+          <p class="muted" style="margin:0">Places the submit button on its own — with your chosen label and colors.</p>
+        </div>
+      </div>
+
+      <p class="eyebrow" style="margin-top:44px">The pipeline</p>
+      <div class="pipe">
+        <div class="node"><div class="k">Public page</div><div class="v">Submission</div><div class="d">Visitor fills the form and submits.</div></div>
+        <div class="arrow">→</div>
+        <div class="node"><div class="k">Server</div><div class="v">Validated lead</div><div class="d">Fields are re-checked and mapped on the server, then stored.</div></div>
+        <div class="arrow">→</div>
+        <div class="node"><div class="k">Console</div><div class="v">Opportunity</div><div class="d">A lead is promoted into the sales pipeline.</div></div>
+        <div class="arrow">→</div>
+        <div class="node"><div class="k">Order</div><div class="v">Confirmed</div><div class="d">Confirmed with an order number + who confirmed it.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section id="demo" class="demo">
+    <div class="wrap">
+      <p class="eyebrow">Interactive demo</p>
+      <h2>Run the whole flow, right here.</h2>
+      <p class="section-lede">
+        This is a self-contained simulation of the real product. Edit the page, submit as a visitor, then convert
+        and confirm the order in the console. Nothing leaves your browser.
+      </p>
+
+      <div class="demo-grid">
+        <!-- LEFT: builder + preview -->
+        <div class="panel">
+          <div class="panel-head"><span class="step">1</span><span class="t">Builder → live preview</span></div>
+          <div class="panel-body">
+            <label class="lbl" for="htmlBox">Page HTML</label>
+            <textarea id="htmlBox" class="code" spellcheck="false"></textarea>
+            <p class="hint">Try editing the copy, or replace <code>{{form}}</code> with <code>{{field:name}}</code> and <code>{{submit}}</code>.</p>
+
+            <label class="lbl" style="margin-top:16px">Live preview — the published page</label>
+            <div class="preview" id="preview"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: console -->
+        <div class="stack">
+          <div class="panel">
+            <div class="panel-head"><span class="step">2</span><span class="t">Leads</span>
+              <button class="mini-btn" id="csvLeads" type="button" style="margin-left:auto">⬇ CSV</button>
+            </div>
+            <div class="panel-body">
+              <div id="leads"></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><span class="step">3</span><span class="t">Opportunities</span>
+              <button class="mini-btn" id="csvOpps" type="button" style="margin-left:auto">⬇ CSV</button>
+            </div>
+            <div class="panel-body">
+              <div id="opps"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="wrap">
+      <p class="eyebrow">Technology</p>
+      <h2>Built for correctness and speed.</h2>
+      <div class="grid cols-2" style="margin-top:26px">
+        <div class="card">
+          <h3>Framework &amp; language</h3>
+          <p><b>Next.js 14 (App Router)</b> with React Server Components for pages and Client Components for interactivity, all in <b>TypeScript</b>. API logic lives in Next.js route handlers.</p>
+        </div>
+        <div class="card">
+          <h3>Data</h3>
+          <p><b>MongoDB</b> via <b>Mongoose</b> models — landing pages, leads, opportunities, and users — with a connection cached for serverless.</p>
+        </div>
+        <div class="card">
+          <h3>Auth &amp; roles</h3>
+          <p>Signed <b>JWT session cookies</b> with three roles — super admin, admin, and operator. User management is admin-only, enforced in middleware and on the server.</p>
+        </div>
+        <div class="card">
+          <h3>Trust boundary</h3>
+          <p>The browser never decides what a form contains. On submit, the server reloads the page's field definitions, re-validates, and maps each answer to a canonical lead — so the stored data is always trustworthy.</p>
+        </div>
+        <div class="card">
+          <h3>Deployment</h3>
+          <p>Deploys to <b>Vercel</b> on the Node.js runtime; configuration (database, secrets, admin credentials) is supplied entirely through environment variables.</p>
+        </div>
+        <div class="card">
+          <h3>Exports &amp; operations</h3>
+          <p>One-click <b>CSV export</b> for leads and opportunities, per-page publish/draft state, and a live preview &amp; test mode for validating a page before it goes public.</p>
+        </div>
+      </div>
+
+      <p class="eyebrow" style="margin-top:44px">At a glance</p>
+      <div class="card">
+        <div class="kv"><span class="k">Type</span><span class="v">Full-stack web application</span></div>
+        <div class="kv"><span class="k">Role</span><span class="v">Design, architecture &amp; implementation</span></div>
+        <div class="kv"><span class="k">Frontend</span><span class="v">Next.js 14 · React · TypeScript</span></div>
+        <div class="kv"><span class="k">Backend</span><span class="v">Next.js route handlers · Node.js runtime</span></div>
+        <div class="kv"><span class="k">Database</span><span class="v">MongoDB · Mongoose</span></div>
+        <div class="kv"><span class="k">Auth</span><span class="v">JWT cookies · role-based access</span></div>
+        <div class="kv"><span class="k">Hosting</span><span class="v">Vercel</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOME -->
+  <section id="outcome">
+    <div class="wrap">
+      <p class="eyebrow">Outcome</p>
+      <h2>From a blank page to a confirmed order — without leaving the app.</h2>
+      <p class="section-lede">
+        Noah collapses three separate tools — a page builder, a form service, and a CRM spreadsheet — into a single,
+        coherent workflow. The token system keeps designers in full control of the markup, the server keeps the data
+        clean, and the leads → opportunities → orders pipeline gives the team a clear picture of what's actually converting.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>Noah — Landing Page Builder &amp; Lead Console · case study</span>
+    <span class="mono muted">Next.js · TypeScript · MongoDB · Vercel</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- theme ---------- */
+  var root = document.documentElement;
+  var themeBtn = document.getElementById("themeBtn");
+  themeBtn.addEventListener("click", function () {
+    var isDark = getComputedStyle(root).getPropertyValue("--paper").trim() === "#0c0f16"
+      || root.getAttribute("data-theme") === "dark";
+    root.setAttribute("data-theme", isDark ? "light" : "dark");
+  });
+
+  /* ---------- toast ---------- */
+  var toastEl = document.getElementById("toast");
+  var toastTimer;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2600);
+  }
+
+  /* ---------- demo state ---------- */
+  var FIELDS = [
+    { id: "name",   label: "Full name", type: "text", placeholder: "Your name", required: true,  role: "name" },
+    { id: "phone",  label: "Phone",     type: "tel",  placeholder: "Phone number", required: true, role: "phone" },
+    { id: "wilaya", label: "Wilaya",    type: "text", placeholder: "City / region", required: false, role: "address" }
+  ];
+
+  var leads = [];
+  var opps = [];
+  var seqLead = 0, seqOpp = 0;
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  /* ---------- builder preview ---------- */
+  var htmlBox = document.getElementById("htmlBox");
+  var preview = document.getElementById("preview");
+
+  var STARTER =
+    '<h2>Summer promo — 30% off</h2>\n' +
+    "<p>Leave your details and we'll call you back.</p>\n" +
+    "{{form}}";
+  htmlBox.value = STARTER;
+
+  function fieldMarkup(f) {
+    var req = f.required ? ' <span class="req">*</span>' : "";
+    return (
+      '<div class="demo-field">' +
+      '<label class="fl">' + esc(f.label) + req + "</label>" +
+      '<input class="demo-inp" data-id="' + f.id + '" type="' + f.type + '" placeholder="' + esc(f.placeholder) + '">' +
+      "</div>"
+    );
+  }
+  function submitMarkup() {
+    return '<button type="button" class="demo-submit">Submit</button>';
+  }
+  function formBlock() {
+    return FIELDS.map(fieldMarkup).join("") + submitMarkup();
+  }
+
+  function renderPreview() {
+    var html = htmlBox.value;
+    var placed = [];
+    // individual field tokens
+    FIELDS.forEach(function (f) {
+      var tok = "{{field:" + f.id + "}}";
+      if (html.indexOf(tok) !== -1) { placed.push(f.id); html = html.split(tok).join(fieldMarkup(f)); }
+    });
+    // whole-form token (renders the not-yet-placed fields + submit)
+    if (html.indexOf("{{form}}") !== -1) {
+      var rest = FIELDS.filter(function (f) { return placed.indexOf(f.id) === -1; }).map(fieldMarkup).join("");
+      html = html.split("{{form}}").join(rest + submitMarkup());
+    } else if (html.indexOf("{{submit}}") === -1 && placed.length === 0) {
+      // no tokens at all -> append the form so the demo stays usable
+      html = html + formBlock();
+    }
+    html = html.split("{{submit}}").join(submitMarkup());
+    preview.innerHTML = html;
+  }
+
+  // Submit handling via delegation (survives re-renders)
+  preview.addEventListener("click", function (e) {
+    var t = e.target;
+    if (!t.classList || !t.classList.contains("demo-submit")) return;
+    var inputs = preview.querySelectorAll(".demo-inp");
+    var values = {}, missing = [];
+    inputs.forEach(function (inp) {
+      var id = inp.getAttribute("data-id");
+      values[id] = inp.value.trim();
+    });
+    FIELDS.forEach(function (f) {
+      if (f.required && !values[f.id]) missing.push(f.label);
+    });
+    if (missing.length) { toast("Please fill: " + missing.join(", ")); return; }
+
+    seqLead += 1;
+    leads.unshift({
+      id: "L" + String(seqLead).padStart(3, "0"),
+      name: values.name || "",
+      phone: values.phone || "",
+      wilaya: values.wilaya || "",
+      converted: false
+    });
+    inputs.forEach(function (inp) { inp.value = ""; });
+    renderLeads();
+    toast("Submitted ✓ — visitor forwarded to the thank-you page");
+  });
+
+  /* ---------- leads table ---------- */
+  var leadsEl = document.getElementById("leads");
+  function renderLeads() {
+    if (!leads.length) {
+      leadsEl.innerHTML = '<div class="empty">No leads yet — submit the preview form on the left.</div>';
+      return;
+    }
+    var rows = leads.map(function (l) {
+      var action = l.converted
+        ? '<span class="badge green">converted</span>'
+        : '<button class="mini-btn primary" data-convert="' + l.id + '">Convert</button>';
+      return "<tr>" +
+        '<td class="mono">' + l.id + "</td>" +
+        "<td>" + esc(l.name) + "</td>" +
+        "<td>" + esc(l.phone) + "</td>" +
+        "<td>" + (esc(l.wilaya) || "—") + "</td>" +
+        "<td>" + action + "</td>" +
+      "</tr>";
+    }).join("");
+    leadsEl.innerHTML =
+      '<div style="overflow-x:auto"><table class="t"><thead><tr>' +
+      "<th>ID</th><th>Name</th><th>Phone</th><th>Region</th><th>Action</th>" +
+      "</tr></thead><tbody>" + rows + "</tbody></table></div>";
+  }
+
+  leadsEl.addEventListener("click", function (e) {
+    var id = e.target.getAttribute && e.target.getAttribute("data-convert");
+    if (!id) return;
+    var lead = leads.find(function (l) { return l.id === id; });
+    if (!lead || lead.converted) return;
+    lead.converted = true;
+    seqOpp += 1;
+    opps.unshift({
+      id: "O" + String(seqOpp).padStart(3, "0"),
+      name: lead.name, phone: lead.phone, wilaya: lead.wilaya,
+      status: "open", order: ""
+    });
+    renderLeads(); renderOpps();
+    toast("Lead " + id + " converted to an opportunity");
+  });
+
+  /* ---------- opportunities table ---------- */
+  var oppsEl = document.getElementById("opps");
+  function renderOpps() {
+    if (!opps.length) {
+      oppsEl.innerHTML = '<div class="empty">No opportunities yet — convert a lead above.</div>';
+      return;
+    }
+    var rows = opps.map(function (o) {
+      var right;
+      if (o.status === "confirmed") {
+        right = '<span class="badge green">confirmed</span> <span class="mono">' + esc(o.order) + "</span>";
+      } else if (o.confirming) {
+        right =
+          '<span style="display:inline-flex;gap:6px;align-items:center">' +
+          '<input class="inp" style="width:120px;padding:5px 8px" placeholder="Order #" data-order="' + o.id + '">' +
+          '<button class="mini-btn success" data-confirm="' + o.id + '">Confirm</button>' +
+          "</span>";
+      } else {
+        right = '<button class="mini-btn primary" data-check="' + o.id + '">Check → Confirm</button>';
+      }
+      var badge = o.status === "confirmed" ? "" : '<span class="badge amber">open</span> ';
+      return "<tr>" +
+        '<td class="mono">' + o.id + "</td>" +
+        "<td>" + esc(o.name) + "</td>" +
+        "<td>" + esc(o.phone) + "</td>" +
+        "<td>" + badge + right + "</td>" +
+      "</tr>";
+    }).join("");
+    oppsEl.innerHTML =
+      '<div style="overflow-x:auto"><table class="t"><thead><tr>' +
+      "<th>ID</th><th>Name</th><th>Phone</th><th>Status / order</th>" +
+      "</tr></thead><tbody>" + rows + "</tbody></table></div>";
+  }
+
+  oppsEl.addEventListener("click", function (e) {
+    var el = e.target;
+    var check = el.getAttribute && el.getAttribute("data-check");
+    var confirmId = el.getAttribute && el.getAttribute("data-confirm");
+    if (check) {
+      var o1 = opps.find(function (o) { return o.id === check; });
+      if (o1) { o1.confirming = true; renderOpps(); }
+      return;
+    }
+    if (confirmId) {
+      var o2 = opps.find(function (o) { return o.id === confirmId; });
+      var input = oppsEl.querySelector('[data-order="' + confirmId + '"]');
+      var val = input ? input.value.trim() : "";
+      if (!val) { toast("Enter an order number to confirm"); return; }
+      o2.status = "confirmed"; o2.order = val; o2.confirming = false;
+      renderOpps();
+      toast("Order " + val + " confirmed ✓");
+    }
+  });
+
+  /* ---------- CSV (demo) ---------- */
+  function download(name, text) {
+    var blob = new Blob([text], { type: "text/csv;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+  }
+  function csv(headers, rows) {
+    function cell(v) { v = String(v == null ? "" : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+    return "﻿" + [headers.join(",")].concat(rows.map(function (r) { return r.map(cell).join(","); })).join("\r\n");
+  }
+  document.getElementById("csvLeads").addEventListener("click", function () {
+    if (!leads.length) { toast("No leads to export yet"); return; }
+    download("leads-demo.csv", csv(["id", "name", "phone", "region", "converted"],
+      leads.map(function (l) { return [l.id, l.name, l.phone, l.wilaya, l.converted]; })));
+  });
+  document.getElementById("csvOpps").addEventListener("click", function () {
+    if (!opps.length) { toast("No opportunities to export yet"); return; }
+    download("opportunities-demo.csv", csv(["id", "name", "phone", "status", "orderNumber"],
+      opps.map(function (o) { return [o.id, o.name, o.phone, o.status, o.order]; })));
+  });
+
+  /* ---------- init ---------- */
+  htmlBox.addEventListener("input", renderPreview);
+  renderPreview();
+  renderLeads();
+  renderOpps();
+})();
+</script>
+</body>
+</html>

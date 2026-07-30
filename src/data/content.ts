@@ -243,14 +243,7 @@ export type DailyTool = {
 };
 
 export const dailyTools: DailyTool[] = [
-  {
-    id: "mailforge",
-    title: "MailForge",
-    description: "Email workflow and message-generation tool I use daily for communication and fast content drafting.",
-    tags: ["Email", "Automation", "Productivity"],
-    results: ["Helps streamline daily communication tasks", "Built for fast, reusable email workflows"],
-    link: "https://noahswitch.github.io/NoahSwitch-MailForge",
-  },
+
   {
     id: "noah-sign",
     title: "Noah Sign",
@@ -272,6 +265,29 @@ export const dailyTools: DailyTool[] = [
     link: "https://noahswitch.github.io/Doc2HTML",
     
   },
+  {
+    id: "noah-landingbuilder",
+    title: "Noah-LandingPage",
+    description:
+      "A full-stack landing-page builder and lead console. Design pages from raw HTML using simple placeholder tokens, publish them to their own URL, and turn every submission into a tracked sales record through a leads → opportunities → confirmed-orders pipeline — all in one app. This is an interactive case study with a live in-browser demo; to see the full project, please get in touch.",
+    tags: ["Next.js", "TypeScript", "MongoDB", "React"],
+    results: [
+      "Token-based editor ({{form}}, {{field:ID}}, {{submit}}) that turns hand-written HTML into a working, styleable lead form",
+      "End-to-end pipeline: server-validated leads → opportunities → confirmed orders, with one-click CSV export",
+      "Role-based console (super admin / admin / operator) with a live preview & test mode before publishing",
+    ],
+    link: withBasePath("/Noah-LandingBuilder/"),
+  },
+  {
+    id: "mailforge",
+    title: "MailForge",
+    description: "Email workflow and message-generation tool I use daily for communication and fast content drafting.",
+    tags: ["Email", "Automation", "Productivity"],
+    results: ["Helps streamline daily communication tasks", "Built for fast, reusable email workflows"],
+    link: "https://noahswitch.github.io/NoahSwitch-MailForge",
+  },
+  
+
 ];
 
 export type ResearchPaper = {
