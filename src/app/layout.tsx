@@ -15,6 +15,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { IntroSequence } from "@/components/layout/IntroSequence";
 import { CursorGlow } from "@/components/layout/CursorGlow";
+import { TrackingScript } from "@/components/layout/TrackingScript";
 import { profile, links } from "@/data/content";
 import { withBasePath } from "@/lib/basePath";
 
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main-content">{children}</main>
           <Footer />
         </SmoothScrollProvider>
+        <TrackingScript />
       </body>
     </html>
   );

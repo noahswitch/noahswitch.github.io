@@ -53,6 +53,7 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.site.outputs.base_path }}
           NEXT_PUBLIC_SITE_URL: ${{ steps.site.outputs.site_url }}
+          NEXT_PUBLIC_NOAH_DOMAIN: ${{ vars.NEXT_PUBLIC_NOAH_DOMAIN }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
