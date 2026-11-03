@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { ArrowRight, Github, Linkedin, Send, GraduationCap, Rss } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Send, GraduationCap, Rss, Award } from "lucide-react";
 import { useLenis } from "lenis/react";
 import { profile, links } from "@/data/content";
 import { Reveal } from "@/components/ui/Reveal";
@@ -17,6 +17,7 @@ const socials = [
   { href: links.researchgate, label: "ResearchGate", icon: GraduationCap },
   { href: links.telegram, label: "Telegram", icon: Send },
   { href: links.blog, label: "Blog", icon: Rss },
+  { href: links.endorsements, label: "Endorsements", icon: Award },
 ];
 
 export function Hero() {
