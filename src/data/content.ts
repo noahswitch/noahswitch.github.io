@@ -47,6 +47,7 @@ export const links = {
   researchgate: "https://www.researchgate.net/profile/Nasreddine-Slimani",
   telegram: "https://t.me/s_noah",
   blog: "https://nslimani.blogspot.com/",
+  endorsements: withBasePath("/Reference_Letters/"),
 } as const;
 
 export const achievements = [

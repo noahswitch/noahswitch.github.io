@@ -1,4 +1,4 @@
-import { Mail, Github, Linkedin, Send, GraduationCap, Rss, MapPin } from "lucide-react";
+import { Mail, Github, Linkedin, Send, GraduationCap, Rss, MapPin, Award } from "lucide-react";
 import { profile, links, openToList } from "@/data/content";
 import { Reveal } from "@/components/ui/Reveal";
 import { Magnetic } from "@/components/ui/Magnetic";
@@ -9,6 +9,7 @@ const socials = [
   { href: links.researchgate, label: "ResearchGate", icon: GraduationCap },
   { href: links.telegram, label: "Telegram", icon: Send },
   { href: links.blog, label: "Blog", icon: Rss },
+  { href: links.endorsements, label: "Endorsements", icon: Award },
 ];
 
 export function Contact() {
